@@ -1,0 +1,192 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/* Major sections */
+
+body {
+	background: #fcfcfc;
+    color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: medium;
+}
+
+footer,
+header {
+	background: #f5f5f5 url(nav.png);
+	height: 64px;
+}
+
+header {
+	margin-bottom: 32px;
+}
+
+footer {
+    margin-top: 32px;
+}
+
+.body-width {
+	margin: 0 auto;
+	width: 900px;
+}
+
+.content {
+	position: relative;
+	left: 192px;
+	width: 676px;
+	margin-left: 32px;
+}
+
+.logo {
+	width: 192px;
+	height: 160px;
+	background: url(logo.png) transparent no-repeat center;
+	position: absolute;
+}
+
+.navigation {
+	width: 192px;
+	position: absolute;
+    top: 288px;
+}
+
+/* Headings */
+
+h1,
+h2 {
+    margin-bottom: 1em;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: x-large;
+}
+
+h2 {
+    font-size: large;
+}
+
+header h1,
+.navigation h1 {
+	color: #fcfcfc;
+}
+
+/* General styles */
+
+article p,
+article li {
+	line-height: 200%;
+}
+
+.title {
+	background: #8c4ca9 url(title.png) bottom repeat-x;
+	width: 192px;
+	height: 46px;
+	text-align: center;
+	padding-top: 18px;
+    font-size: large;
+}
+
+.left { float: left }
+.right { float: right }
+.clear { clear: both }
+
+/* Navigation elements and links */
+
+a { text-decoration: none }
+
+header a {
+	color: #f5f5f5;
+	display: inline-block;
+}
+
+header ul a,
+p a,
+.navigation a {
+	color: #8c4ca9;
+}
+
+header ul a {
+	border-right: 1px solid #e0e0e0;
+	padding: 18px 18px 0 18px;
+	height: 38px;
+}
+
+header ul a:hover,
+header ul a:focus {
+	background: #fcfcfc;
+}
+
+p a:hover,
+p a:focus,
+.navigation a:hover,
+.navigation a:focus {
+	text-decoration: underline;
+}
+
+/* Block elements */
+
+header ul {
+	list-style: none;
+}
+
+header ul li {
+	border-right: 1px solid #fff;
+	display: inline-block;
+}
+
+.content p,
+.content pre,
+.content ul {
+	margin-bottom: 2em;
+}
+
+.content ul {
+	list-style-position: outside;
+	margin-left: 32px;
+}
+
+.navigation ul {
+	list-style: none;
+    margin-bottom: 1em;
+}
+
+/* Code and syntax highlighting */
+
+code {
+	font-size: larger;
+}
+
+pre .nocode {
+	background-color: none;
+	color: #000;
+}
+
+pre .str { color: #08c }
+pre .kwd { color: #008 }
+pre .com { color: #888 }
+pre .typ { color: #b6d }
+pre .lit { color: #08c }
+pre .pun { color: #000 }
+pre .pln { color: #000 }
+pre .dec { color: #08c }
+
+.gist-it-gist {
+    margin-bottom: 2em;
+}
+
+.gist-it-gist .gist-file {
+	border: none !important;
+}
+
+.gist-it-gist .gist-file .gist-data {
+	background: none !important;
+	border: none !important;
+	margin: 32px;
+}
+
+.gist-it-gist .gist-file .gist-meta {
+	background: #f0f0f0 !important;
+	border: 1px solid #e0e0e0 !important;
+}

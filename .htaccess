@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} =www.kittenlang.org [NC]
+RewriteRule ^(.*)$ http://kittenlang.org/$1 [R=302,L]
+
+RewriteBase /
+RewriteRule ^kitteneers/?$ "http://box610.bluehost.com/mailman/listinfo/kitteneers_kittenlang.org" [R=301,L]
