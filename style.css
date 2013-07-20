@@ -89,7 +89,9 @@ header h1,
 /* General styles */
 
 article p,
-article li {
+article li,
+article dt,
+article dd {
 	line-height: 200%;
 }
 
@@ -152,13 +154,25 @@ header ul li {
 
 .content p,
 .content pre,
-.content ul {
+.content ul,
+.content dd,
+.content blockquote {
 	margin-bottom: 2em;
+}
+
+.content ul,
+.content dl,
+.content blockquote,
+.content pre {
+	margin-left: 32px;
 }
 
 .content ul {
 	list-style-position: outside;
-	margin-left: 32px;
+}
+
+.content dt {
+	font-weight: bold;
 }
 
 .navigation ul {
