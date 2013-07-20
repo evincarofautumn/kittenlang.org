@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tutorial—Kitten</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+  </head>
+  <body>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-42446087-1', 'kittenlang.org');
+      ga('send', 'pageview');
+    </script>
+    <header>
+      <div class="body-width">
+        <a class="title left" href="/">Kitten</a>
+        <ul class="right">
+          <li><a href="/documentation/">Documentation</a>
+          <li><a href="https://github.com/evincarofautumn/kitten/">Source Code</a>
+        </ul>
+      </div>
+    </header>
+    <article class="body-width">
+      <div class="logo"></div>
+      <div class="navigation">
+        <h1 class="title">Learn</h1>
+        <ul>
+          <li><a href="/tutorial/">Tutorial</a>
+          <li><a href="/documentation/">Documentation</a>
+          <li><a href="/about/">About Kitten</a>
+        </ul>
+        <h1 class="title">Contribute</h1>
+        <ul>
+          <li><a href="https://github.com/evincarofautumn/kitten">Source Code</a>
+          <li><a href="https://github.com/evincarofautumn/kitten/issues">Bugtracker</a>
+          <li><a href="irc://freenode.net/#concatenative">IRC</a>
+        </ul>
+      </div>
+      <div class="content">
+        <h1>Tutorial</h1>
+        <p>Welcome to the Kitten tutorial! This is the best way to learn Kitten, a little functional stack-based programming language. Actually, it’s pretty much the only way, because Kitten is young. But it has a lot of big ideas!
+        <p>This tutorial tries not to make too many assumptions about your existing knowledge, and it has lots of links to outside learning materials so you don’t ever get lost. However, you will definitely find learning Kitten easier if you’ve programmed before.
+        <h2>What is Kitten?</h2>
+        <p><strong>Kitten</strong> is a statically typed, stack-based functional programming language designed to be simple and fast. (That’s what the website says.) A <em>functional</em> language is one that speaks <em>declaratively</em> about the solution to a problem, with an emphasis on, you guessed it, functions. The two important properties of functional languages are:
+        <dl>
+          <dt>Immutability
+          <dd>Values, once created, don’t change.
+          <dt>Purity
+          <dd>If a function is called multiple times with the same parameters, it <em>must</em> produce the same result, just like in math.
+        </dl>
+        <p>A <em>stack-based</em> language is one where most operations are done on a <em>stack</em> of values. Functions take their inputs from the stack, do some computation, and return their results on the same stack. An important feature of stack-based languages is their notation for writing expressions. You’re probably accustomed to seeing math expressions like this:
+        <blockquote>
+          (2 + 3) × (42 − 12)
+        </blockquote>
+        <p>And most programming languages have similar notation inspired by mathematics:
+        <pre><code>(2 + 3) * (42 - 12)</code></pre>
+        <p>But some programming languages use other notations; Lisp, for example, uses <em>prefix notation</em>, also known as <em>Polish notation</em>, which looks like this:
+        <pre><code>(* (+ 2 3) (- 42 12))</code></pre>
+        <p>You can read this as “the product (<code>*</code>) of the sum (<code>+</code>) of 2 and 3, with the difference (<code>-</code>) of 42 and 12”. Kitten and other stack languages use <em>postfix notation</em>, also called <em>reverse Polish notation</em> or <em>RPN</em>, where the operators go in the opposite order:
+        <pre><code>2 3 + 42 12 - *</pre></code>
+        <p>You can read this as “Take 2 and 3 and add them (<code>+</code>). Take 42 and 12 and subtract them (<code>-</code>). Then take the results and multiply them”. Whereas the prefix version sounds like a description of the expression, the postfix version sounds more like a description of the steps you take to compute it.
+        <p>Programming languages that describe computations in terms of actions like this are called <em>imperative</em> languages. The majority of languages in popular use today are imperative, such as Java and C++. Though languages often include ideas from both imperative and functional programming, the two paradigms are often considered opposite in spirit.
+        <h2>Hold up!</h2>
+        <p>I mentioned earlier that Kitten is <em>both</em> functional <em>and</em> stack-based. These two seemingly opposing features are reconciled by a simple notion: effects. The only side effect of the <code>+</code> operator is to pop two values from the stack and push their sum, and it always produces the same output given the same inputs.
+        <p>So in fact, we can reason about these imperative stack functions as pure mathematical functions, just like in a functional programming language. This combination of imperative style and functional reasoning is called <a href="https://en.wikipedia.org/wiki/Concatenative_programming">concatenative programming</a>, and is a powerful way of thinking about programs.
+        <h2>Enough jibber jabber! Let’s write some code!</h2>
+        <p>Okay! First you need to download and install Kitten for your platform.
+        <blockquote>
+          Note: you cannot actually download and install Kitten yet.
+        </blockquote>
+        <p>Open up your terminal and type <tt>kitten</tt>. Kitten will respond with a prompt:
+        <pre><code>&gt;&gt;&gt; </code></pre>
+        <p>Here is where you can type code and see its results. Let’s have Kitten say something:
+        <pre><code>&gt;&gt;&gt; "meow" say
+meow
+&gt;&gt;&gt; </code></pre>
+        <p>Adorable!
+      </div>
+      <div class="clear"></div>
+    </article>
+    <footer></footer>
+  </body>
+</html>
