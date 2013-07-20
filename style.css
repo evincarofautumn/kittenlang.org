@@ -14,7 +14,7 @@ body {
 
 footer,
 header {
-	background: #f5f5f5 url(nav.png);
+	background: #f5f5f5 url(/nav.png);
 	height: 64px;
 }
 
@@ -41,7 +41,7 @@ footer {
 .logo {
 	width: 192px;
 	height: 160px;
-	background: url(logo.png) transparent no-repeat center;
+	background: url(/logo.png) transparent no-repeat center;
 	position: absolute;
 }
 
@@ -80,7 +80,7 @@ article li {
 }
 
 .title {
-	background: #8c4ca9 url(title.png) bottom repeat-x;
+	background: #8c4ca9 url(/title.png) bottom repeat-x;
 	width: 192px;
 	height: 46px;
 	text-align: center;
