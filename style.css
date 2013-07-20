@@ -12,6 +12,10 @@ body {
 	font-size: medium;
 }
 
+article {
+	height: 100%;
+}
+
 footer,
 header {
 	background: #f5f5f5 url(/nav.png);
@@ -32,10 +36,9 @@ footer {
 }
 
 .content {
-	position: relative;
-	left: 192px;
+	height: 100%;
+	float: right;
 	width: 676px;
-	margin-left: 32px;
 }
 
 .logo {
@@ -46,9 +49,10 @@ footer {
 }
 
 .navigation {
+	float: left;
+	height: 100%;
 	width: 192px;
-	position: absolute;
-	top: 288px;
+	margin-top: 224px;
 }
 
 /* Headings */
