@@ -7,7 +7,7 @@
 
 body {
 	background: #fcfcfc;
-    color: #333;
+	color: #333;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: medium;
 }
@@ -23,7 +23,7 @@ header {
 }
 
 footer {
-    margin-top: 32px;
+	margin-top: 32px;
 }
 
 .body-width {
@@ -48,23 +48,23 @@ footer {
 .navigation {
 	width: 192px;
 	position: absolute;
-    top: 288px;
+	top: 288px;
 }
 
 /* Headings */
 
 h1,
 h2 {
-    margin-bottom: 1em;
-    font-weight: normal;
+	margin-bottom: 1em;
+	font-weight: normal;
 }
 
 h1 {
-    font-size: x-large;
+	font-size: x-large;
 }
 
 h2 {
-    font-size: large;
+	font-size: large;
 }
 
 header h1,
@@ -85,7 +85,7 @@ article li {
 	height: 46px;
 	text-align: center;
 	padding-top: 18px;
-    font-size: large;
+	font-size: large;
 }
 
 .left { float: left }
@@ -149,7 +149,7 @@ header ul li {
 
 .navigation ul {
 	list-style: none;
-    margin-bottom: 1em;
+	margin-bottom: 1em;
 }
 
 /* Code and syntax highlighting */
@@ -173,7 +173,7 @@ pre .pln { color: #000 }
 pre .dec { color: #08c }
 
 .gist-it-gist {
-    margin-bottom: 2em;
+	margin-bottom: 2em;
 }
 
 .gist-it-gist .gist-file {
