@@ -59,8 +59,8 @@ footer {
 
 h1,
 h2 {
-	margin-bottom: 1em;
 	font-weight: normal;
+	margin-bottom: 1em;
 }
 
 h1 {
@@ -69,6 +69,16 @@ h1 {
 
 h2 {
 	font-size: large;
+}
+
+.content h1,
+.content h2 {
+	border-bottom: 1px solid #e0e0e0;
+	padding-bottom: 8px;
+}
+
+.content h2 {
+	padding-top: 1em;
 }
 
 header h1,
