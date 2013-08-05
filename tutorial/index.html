@@ -61,8 +61,8 @@
         <p>But some programming languages use other notations; Lisp, for example, uses <em>prefix notation</em>, also known as <em>Polish notation</em>, which looks like this:
         <pre><code>(* (+ 2 3) (- 42 12))</code></pre>
         <p>You can read this as “the product (<code>*</code>) of the sum (<code>+</code>) of 2 and 3, with the difference (<code>-</code>) of 42 and 12”. Kitten and other stack languages use <em>postfix notation</em>, also called <em>reverse Polish notation</em> or <em>RPN</em>, where the operators go in the opposite order:
-        <pre><code>2 3 + 42 12 - *</pre></code>
-        <p>You can read this as “Take 2 and 3 and add them (<code>+</code>). Take 42 and 12 and subtract them (<code>-</code>). Then take the results and multiply them”. Whereas the prefix version sounds like a description of the expression, the postfix version sounds more like a description of the steps you take to compute it.
+        <pre><code>(2 3 +) (42 12 -) *</pre></code>
+        <p>You can read this as “Take 2 and 3 and add them (<code>+</code>). Take 42 and 12 and subtract them (<code>-</code>). Then take the results and multiply them (<code>*</code>)”. Whereas the prefix version sounds like a description of the expression, the postfix version sounds more like a description of the steps you take to compute it.
         <p>Programming languages that describe computations in terms of actions like this are called <em>imperative</em> languages. The majority of languages in popular use today are imperative, such as Java and C++. Though languages often include ideas from both imperative and functional programming, the two paradigms are often considered opposite in spirit.
         <h2>Hold up!</h2>
         <p>I mentioned earlier that Kitten is <em>both</em> functional <em>and</em> stack-based. These two seemingly opposing features are reconciled by a simple notion: effects. The only side effect of the <code>+</code> operator is to pop two values from the stack and push their sum, and it always produces the same output given the same inputs.
@@ -70,15 +70,105 @@
         <h2>Enough jibber jabber! Let’s write some code!</h2>
         <p>Okay! First you need to download and install Kitten for your platform.
         <blockquote>
-          Note: you cannot actually download and install Kitten yet.
+          Note: you cannot actually download and install Kitten yet. Follow the README instructions on how to build Kitten for your platform.
         </blockquote>
-        <p>Open up your terminal and type <tt>kitten</tt>. Kitten will respond with a prompt:
-        <pre><code>&gt;&gt;&gt; </code></pre>
-        <p>Here is where you can type code and see its results. Let’s have Kitten say something:
-        <pre><code>&gt;&gt;&gt; "meow" say
-meow
+        <p>Open up your terminal and type <tt>kitten</tt>. Kitten will respond with a welcome message and a prompt:
+        <pre><code>Welcome to Kitten!
+Type ':help' for help or ':quit' to quit.
 &gt;&gt;&gt; </code></pre>
-        <p>Adorable!
+        <p>Here is where you can type code and see its results. Let’s have Kitten say something.
+        <pre><code>&gt;&gt;&gt; <kbd>"meow" say</kbd>
+meow
+</code></pre>
+        <p>Adorable! What happens when we enter a number?
+        <pre><code>&gt;&gt;&gt; <kbd>1</kbd>
+1</code></pre>
+        <p>So the result of evaluating <code>1</code> is just <code>1</code>. What happens when we enter another number?
+        <pre><code>&gt;&gt;&gt; <kbd>2</kbd>
+1
+2</code></pre>
+        <p>Interesting. Kitten remembered the last value we entered on the stack, and is displaying the whole stack between prompts, in the order we entered it. Let’s add these numbers together.
+        <pre><code>&gt;&gt;&gt; <kbd>+</kbd>
+3</code></pre>
+        <p>The <code>+</code> function took the two integers we had placed on the stack, added them, and pushed the result. We can also enter multiple values at once.
+        <pre><code>&gt;&gt;&gt; <kbd>4 5</kbd>
+3
+4
+5</code></pre>
+        <p>And perform multiple operations at once.
+        <pre><code>&gt;&gt;&gt; <kbd>+ *</kbd>
+27</code></pre>
+        <p>The <code>drop</code> function lets us drop a single value from the stack. In the REPL, you can also use the <code>:clear</code> command to clear the stack entirely.
+        <pre><code>&gt;&gt;&gt; <kbd>:clear</kbd></code></pre>
+        <h2>Vectors and Functions</h2>
+        <p>Kitten has a built-in vector datatype. Vector literals are surrounded by square brackets <code>[]</code> and have comma-separated elements.
+        <pre><code>&gt;&gt;&gt; <kbd>[1, 2, 3]</kbd>
+[1,2,3]</code></pre>
+        <p>We can duplicate a value with the <code>dup</code> function.
+        <pre><code>&gt;&gt;&gt; <kbd>dup</kbd>
+[1,2,3]
+[1,2,3]</code></pre>
+        <p>The <code>map</code> function lets us apply a function to each element of a vector, returning a vector of the results. We can create a function by simply surrounding some code with curly braces <code>{}</code>.
+        <pre><code>&gt;&gt;&gt; <kbd>{2 *}</kbd>
+[1,2,3]
+[1,2,3]
+&lt;function&gt;
+
+&gt;&gt;&gt; <kbd>map</kbd>
+[1,2,3]
+[2,4,6]</code></pre>
+        <p><code>{2 *}</code> is an anonymous function which takes an integer on the stack and multiplies it by 2. You can think of it as the <code>*</code> function, partially applied. We can give this function a name using <code>def</code>, so we don’t have to repeat its implementation if we want to use it again.
+        <pre><code>&gt;&gt;&gt; <kbd>def twice {2 *}</kbd></code></pre>
+        <p>We can call this function just like we called <code>map</code>, by saying its arguments and its name, or taking its arguments from the stack.
+        <pre><code>&gt;&gt;&gt; <kbd>2 twice</kbd>
+4
+
+&gt;&gt;&gt; <kbd>twice</kbd>
+8</code></pre>
+        <p>And of course we can pass <code>twice</code> to <code>map</code> simply by wrapping it in curly braces.
+        <pre><code>&gt;&gt;&gt; <kbd>[1, 2, 3] {twice} map</kbd>
+[2,4,6]
+
+&gt;&gt;&gt; <kbd>{twice} map</kbd>
+[4,8,12]</code></pre>
+        <p>The <code>cat</code> function lets us concatenate vectors.
+        <pre><code>&gt;&gt;&gt; <kbd>[0, 1] [2, 3] cat</kbd>
+[0,1,2,3]
+</code></pre>
+        <p>Text literals are simply vectors of characters, so we can <code>cat</code> those as well.
+        <pre><code>&gt;&gt;&gt; <kbd>"Hello, " "world!" cat say</kbd>
+Hello, world!
+
+&gt;&gt;&gt; <kbd>["this", "that", "more"]</kbd>
+["this","that","more"]
+
+&gt;&gt;&gt; <kbd>{" thing" cat} map</kbd>
+["this thing","that thing","more thing"]
+</code></pre>
+        <p>Oops, we need a plural. How do we modify the last element of a vector? Kitten doesn’t let us mutate values directly, so we have to think in terms of functions. Let’s define a function to do the job for us, then go over all the moving parts. Kitten lets us enter multi-line statements at the prompt—as long as our braces and parentheses don’t match, it assumes we have more to say.
+        <pre><code>&gt;&gt;&gt; <kbd>def mapLast {</kbd>
+...   <kbd>-&gt;{ vector function }</kbd>
+...   <kbd>vector init</kbd>
+...   <kbd>[vector last function @]</kbd>
+...   <kbd>cat</kbd>
+... <kbd>}</kbd>
+</code></pre>
+        <p>Now we can use this function to modify our vector.
+        <pre><code>&gt;&gt;&gt; <kbd>{"s" cat} mapLast</kbd>
+["this thing","that thing","more things"]
+
+&gt;&gt;&gt; <kbd>[0, 1] {++} mapLast</kbd>
+[0, 2]</code></pre>
+        <p>It works! So let’s break it down, piece by piece. The <code>init</code>, <code>last</code>, and <code>@</code> functions are simple. <code>last</code> gets the last element of a vector…
+        <pre><code>&gt;&gt;&gt; <kbd>[1, 2, 3] last</kbd>
+3</code></pre>
+        <p>…the <code>init</code> function gets all but the last…
+        <pre><code>&gt;&gt;&gt; <kbd>[1, 2, 3] init</kbd>
+[1,2]</code></pre>
+        <p>…and <code>@</code> applies a function to the stack, essentially unwrapping the curly braces.
+        <pre><code>&gt;&gt;&gt; <kbd>1 {2 +} @</kbd>
+3</code></pre>
+        <p>Now you can begin to see how it all comes together. The missing piece is the <code>-&gt;</code> syntax at the start of the function. That’s Kitten’s way of introducing <em>local variables</em>, in this case named <code>function</code> (the function to apply) and <code>vector</code> (the vector to apply it to). We can introduce multiple names at once with <code>-&gt;{ x y z }</code>, or a single name with <code>-&gt;x</code>; either way, the values are taken from the stack and stored in the corresponding names until the end of the current block.
       </div>
       <div class="clear"></div>
     </article>

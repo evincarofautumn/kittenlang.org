@@ -88,6 +88,10 @@ header h1,
 
 /* General styles */
 
+kbd {
+    font-weight: bold;
+}
+
 article p,
 article li,
 article dt,
