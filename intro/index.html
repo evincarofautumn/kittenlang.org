@@ -111,14 +111,15 @@ else:
 if (foodDish isEmpty): ":(" say begForFood else: purr</code></pre>
 
       <h2>Function Definitions</h2>
-      <p>Functions are declared with the <code>def</code> keyword. They have a name, a type signature, and a body. Function types are written with an ASCII rightwards arrow <code>-&gt;</code>.
+      <p>Functions are declared with the <code>def</code> keyword. They have a name, a type signature, and a body. Type signatures are written in parentheses; function types use an ASCII rightwards arrow <code>-&gt;</code>. If no signature is specified, the type can be inferred.
       <pre><code>def square (Int -&gt; Int):
   dup *</code></pre>
-      <p>Local variables can be declared with the <code>-&gt;name</code> syntax. This takes a value from the stack and stores it in a local variable for the duration of a block. Local variables are always immutable.
-      <pre><code>def square (Int -&gt; Int):
+      <p>Local variables can be declared with the <code>-&gt;name</code> syntax. This takes a value from the stack and stores it in a local variable for the duration of a block. Mentioning a local has the effect of pushing its value to the stack.
+      <pre><code>def square:
   -&gt;x
   x x *</code></pre>
-      <p>Functions can take multiple inputs; in the type signature, their types are separated by spaces. There is no overloading; the <code>*</code> operator is for <code>Int</code> multiplication, and <code>*.</code> is for <code>Float</code>.
+      <p>Local variables are always immutable. An expression like <code>x++</code> does not alter <code>x</code>: it’s exactly equivalent to <code>x 1 +</code>.
+      <p>Functions can take multiple inputs. In the type signature, their types are separated by spaces. There is no overloading: the <code>*</code> operator is for <code>Int</code> multiplication, and <code>*.</code> is for <code>Float</code>.
       <pre><code>def multiply3 (Float Float Float -&gt; Float):
   -&gt;z
   -&gt;y
@@ -130,11 +131,11 @@ x sayInt  // 1
 y sayInt  // 2
 z sayInt  // 3
 
-def multiply3 (Float Float Float -&gt; Float):
+def multiply3:
   -&gt;{ x y z }
   x y z *. *.</code></pre>
       <p>However, it is also common to chain functions <em>without</em> using local variables. You can pass arguments and return values implicitly on the stack.
-      <pre><code>def multiply3 (Float Float Float -&gt; Float):
+      <pre><code>def multiply3:
   *. *.</code></pre>
       <p>Functions may also have multiple return values.
       <pre><code>def incrementBoth (Int Int -&gt; Int Int):
@@ -150,8 +151,9 @@ def multiply3 (Float Float Float -&gt; Float):
   else:
     v init reverse
     v last prepend</code></pre>
-      <p>The type variable <code>a</code> allows this function to work on vectors of any element type. The type of <code>map</code> is <code>[a] (a -&gt; b) -&gt; [b]</code>, that is, it takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values.
+      <p>The type variable <code>a</code> allows this function to work on vectors of any element type. The type of the pure <code>map</code> function is <code>[a] (a -&gt; b) -&gt; [b]</code>. It takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values.
       <pre><code>[3, 6, 9, 12] {3 /} map  // [1, 2, 3, 4]</code></pre>
+      <p>The above example shows how function literals are simply code surrounded by curly braces. <code>{3 /}</code> is a function which divides its argument by 3—it can also be written using a local variable, as <code>{ ->x x 3 / }</code>.
 
       <h2>Side Effects</h2>
       <p>When you write a function that does I/O, you must write the side effect in the type signature as <code>+IO</code>. The <code>say</code> function from the standard library has the type <code>[Char] -&gt; +IO</code>—it takes a string of characters and returns nothing, plus an I/O side-effect.
@@ -183,15 +185,10 @@ map
 // Returns:
 // ["feeble", "fieble", "foeble", "fumble"]</code></pre>
       <p>The operator to apply a function to the stack is called <code>@</code> (“apply”). Here is a function which takes two functions and returns their composition:
-      <pre><code>def compose (
-  (a -&gt; b +e1)
-  (b -&gt; c +e2)
-  -&gt;
-  (a -&gt; c +e1+e2)
-):
+      <pre><code>def compose ((a -&gt; b +e1) (b -&gt; c +e2) -&gt; (a -&gt; c +e1+e2)):
   -&gt;{ f g }
   { f@ g@ }</code></pre>
-      <p>The first function has effect <code>e1</code> and the second has effect <code>e2</code>, so their composition has effect <code>e1+e2</code>. Currently, the only effects are <code>+IO</code> and <code>+()</code>, meaning “pure”—the composition of two pure functions is pure, and the composition of an impure function with any function is impure.
+      <p>The first function has effect <code>e1</code> and the second has effect <code>e2</code>, so their composition has effect <code>e1+e2</code>. Currently, the only effects are <code>IO</code> and the default <code>()</code>, meaning “pure”. The composition of two pure functions is pure, and the composition of an impure function with any function is impure.
       </div>
       <div class="clear"></div>
     </article>
