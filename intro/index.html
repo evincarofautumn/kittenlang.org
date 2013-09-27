@@ -94,21 +94,21 @@
         <pre><code>(2 3 +) (4 5 -) *</code></pre>
 
         <h2>Conditionals and Blocks</h2>
-        <p>Conditional execution uses the <code>if</code>-<code>else</code> syntax. Blocks can be surrounded by curly braces <code>{}</code> like in C-style languages, or prefixed with a colon <code>:</code> and delimited by layout.
-        <pre><code>if (foodDish isEmpty) {
+        <p>Conditional execution uses the <code>if_else</code> function, which can be used in prefix form with a backslash <code>\</code>. Blocks can be surrounded by curly braces <code>{}</code> like in C-style languages, or prefixed with a colon <code>:</code> and delimited by layout.
+        <pre><code>\if foodDish isEmpty {
   ":(" say
   begForFood
 } else {
   purr
 }
 
-if (foodDish isEmpty):
+\if foodDish isEmpty:
   ":(" say
   begForFood
 else:
   purr
 
-if (foodDish isEmpty): ":(" say begForFood else: purr</code></pre>
+\if foodDish isEmpty: ":(" say begForFood else: purr</code></pre>
 
       <h2>Function Definitions</h2>
       <p>Functions are declared with the <code>def</code> keyword. They have a name, a type signature, and a body. Type signatures are written in parentheses; function types use an ASCII rightwards arrow <code>-&gt;</code>. If no signature is specified, the type can be inferred.
@@ -146,7 +146,7 @@ def multiply3:
       <p>Type signatures often include <em>type variables</em>, which enable polymorphism. For example, here is a simple recursive function to reverse a vector:
       <pre><code>def reverse ([a] -&gt; [a]):
   -&gt;v
-  if (v isEmpty):
+  \if (v isEmpty):
     []
   else:
     v init reverse
