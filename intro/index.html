@@ -62,28 +62,34 @@
 */</code></pre>
 
         <h2>Literals</h2>
-        <p>Integers consist of decimal digits; floating-point numbers must also include a decimal point <code>.</code> with a fractional part.
-        <pre><code>6
-6.28</code></pre>
-        <p>String literals use double-quotes, and are syntactic sugar for vectors of characters. Common string escapes are allowed using backslash <code>\</code>.
+        <p>Integers consist of decimal digits, or a base prefix and digits in the corresponding base. They have type <code>Int</code>.
+        <pre><code>6       // decimal
+0b1010  // binary
+0o755   // octal
+0x10    // hexadecimal</code></pre>
+        <p>Floating-point numbers consist of decimal digits, a decimal point <code>.</code>, and a fractional part. They have type <code>Float</code>.
+        <pre><code>6.28</code></pre>
+        <p>String literals use double-quotes, and are syntactic sugar for vectors of characters. They have type <code>[Char]</code>. Common string escapes are allowed using a backslash <code>\</code>.
         <pre><code>""
 "Meow!\n"</code></pre>
 
         <h2>Containers</h2>
-        <p>Vectors are surrounded by square brackets <code>[]</code> with comma-separated elements of the same type. A trailing comma is allowed.
+        <p>Vectors are surrounded by square brackets <code>[]</code> with comma-separated elements of the same type. They have type <code>[a]</code> where <code>a</code> is the type of the elements. A trailing comma is allowed.
         <pre><code>[]
 
-[1, 2, 3]
+[1, 2, 3]  // [Int]
 
+// [[Char]]
 [
   "four",
   "five",
   "six",
 ]</code></pre>
-        <p>Tuples are similar to vectors, using parentheses <code>()</code> instead. Tuples may contain elements of different types. It is possible to have a zero-element tuple, or a one-element tuple using a trailing comma.
-        <pre><code>(1, "two", 3.0)
-()
-("silly",)</code></pre>
+        <p>Tuples are similar to vectors, using parentheses <code>()</code> instead. Tuples may contain elements of different types. It is possible to have a zero-element tuple <code>()</code> pronounced “unit”; a one-element tuple is just the value itself.
+        <pre><code>(1, "two", 3.0)  // (Int &amp; [Char] &amp; Float)
+(21, 31)         // (Int & Int)
+()               // ()
+("silly",)       // [Char]</code></pre>
 
         <h2>Expressions</h2>
         <p>Expressions and function calls use postfix syntax and are evaluated from left to right using a stack-based evaluation model.
@@ -94,7 +100,7 @@
         <pre><code>(2 3 +) (4 5 -) *</code></pre>
 
         <h2>Conditionals and Blocks</h2>
-        <p>Conditional execution uses the <code>if_else</code> function, which can be used in prefix form with a backslash <code>\</code>. Blocks can be surrounded by curly braces <code>{}</code> like in C-style languages, or prefixed with a colon <code>:</code> and delimited by layout.
+        <p>Conditional execution uses the <code>if_else</code> function, which is most often used in prefix form with a backslash <code>\</code>. Blocks can be surrounded by curly braces <code>{}</code> like in C-style languages, or prefixed with a colon <code>:</code> and delimited by layout.
         <pre><code>\if foodDish isEmpty {
   ":(" say
   begForFood
@@ -110,23 +116,56 @@ else:
 
 \if foodDish isEmpty: ":(" say begForFood else: purr</code></pre>
 
-      <h2>Function Definitions</h2>
-      <p>Functions are declared with the <code>def</code> keyword. They have a name, a type signature, and a body. Type signatures are written in parentheses; function types use an ASCII rightwards arrow <code>-&gt;</code>. If no signature is specified, the type can be inferred.
-      <pre><code>def square (Int -&gt; Int):
+        <h2>Built-in Algebraic Types</h2>
+        <p>In addition to <code>Int</code>, <code>Float</code>, <code>Char</code>, vectors, and tuples, Kitten has two built-in algebraic data types: <em>option</em> <code>?</code> and <em>choice</em> <code>|</code>.
+        <p>A value of type <code>a?</code> (“optional <code>a</code>”) is either empty with a value of <code>none</code> or full with a value of <code>x some</code>, where <code>x</code> has type <code>a</code>.
+        <pre><code>none    // a?
+5 some  // Int?</code></pre>
+        <p>An instance of <code>a | b</code> (“either <code>a</code> or </code>b</code>”) is either <code>x left</code> or <code>y right</code>, where <code>x</code> has type <code>a</code> and <code>y</code> has type <code>b</code>.
+        <pre><code>// Int | Char
+\if this that =:
+  1 left
+else:
+  '!' right</code></pre>
+        <p>The <code>option_else</code> function matches against optional values, and the <code>choice_else</code> function matches against choice values.
+        <pre><code>\option xs head:
+  sayInt
+else:
+  "empty vector" say
+
+\choice x:
+  sayInt
+else:
+  sayBool</code></pre>
+
+        <h2>Function Definitions</h2>
+        <p>Functions are declared with the <code>def</code> keyword. They have a name, a type signature, and a body. Type signatures are written in parentheses; function types use an ASCII rightwards arrow <code>-&gt;</code> or its Unicode equivalent → (U+2192). If no signature is specified, the type can be inferred.
+        <pre><code>def square (Int -&gt; Int):
   dup *</code></pre>
-      <p>Local variables can be declared with the <code>-&gt;name</code> syntax. This takes a value from the stack and stores it in a local variable for the duration of a block. Mentioning a local has the effect of pushing its value to the stack.
-      <pre><code>def square:
+        <p>A function is automatically applied when you mention its name.
+        <pre><code>4 square</code></pre>
+        <p>To prevent a function from being applied, wrap it in a block.
+        <pre><code>[1, 2, 3] {square} map</code></pre>
+
+        <h2>Locals</h2>
+        <p>Local variables can be declared with the <code>-&gt;name</code> syntax (also <code>→name</code>). This takes a value from the stack and stores it in a local variable for the duration of a block. Mentioning a local has the effect of pushing its value to the stack.
+        <pre><code>def square:
   -&gt;x
   x x *</code></pre>
-      <p>Local variables are always immutable. An expression like <code>x++</code> does not alter <code>x</code>: it’s exactly equivalent to <code>x 1 +</code>.
-      <p>Functions can take multiple inputs. In the type signature, their types are separated by spaces. There is no overloading: the <code>*</code> operator is for <code>Int</code> multiplication, and <code>*.</code> is for <code>Float</code>.
-      <pre><code>def multiply3 (Float Float Float -&gt; Float):
+        <p>Local variables are always immutable. An expression like <code>x++</code> does not alter <code>x</code>, only the <em>copy</em> of <code>x</code> that was pushed to the stack. It’s exactly equivalent to <code>x 1 +</code>.
+        <p>You can use any function in prefix form—not just <code>if_else</code> and friends—to give the impression of a flow-control construct. It’s common to use locals with these when their block arguments take parameters.
+        <pre><code>\each 1 10 ..: -&gt;x
+  x sayInt</code></pre>
+
+        <h2>Multiple Inputs and Outputs</h2>
+        <p>Functions can take multiple inputs. In the type signature, their types are separated by spaces. There is no overloading: the <code>*</code> operator is for <code>Int</code> multiplication, and <code>*.</code> for <code>Float</code>.
+        <pre><code>def multiply3 (Float Float Float -&gt; Float):
   -&gt;z
   -&gt;y
   -&gt;x
   x y z *. *.</code></pre>
-      <p>To reduce stack ordering errors, multiple local variables can be taken from the stack at once in the order they were pushed.
-      <pre><code>1 2 3 -&gt;{ x y z }
+        <p>To reduce stack ordering errors, multiple local variables can be taken from the stack at once in the order they were pushed.
+        <pre><code>1 2 3 -&gt;{ x y z }
 x sayInt  // 1
 y sayInt  // 2
 z sayInt  // 3
@@ -134,30 +173,31 @@ z sayInt  // 3
 def multiply3:
   -&gt;{ x y z }
   x y z *. *.</code></pre>
-      <p>However, it is also common to chain functions <em>without</em> using local variables. You can pass arguments and return values implicitly on the stack.
-      <pre><code>def multiply3:
+        <p>However, it is also common to chain functions <em>without</em> using local variables. You can pass arguments and return values implicitly on the stack.
+        <pre><code>def multiply3:
   *. *.</code></pre>
-      <p>Functions may also have multiple return values.
-      <pre><code>def incrementBoth (Int Int -&gt; Int Int):
+        <p>Functions may also have multiple return values.
+        <pre><code>def incrementBoth (Int Int -&gt; Int Int):
   -&gt;{ x y }
   (x 1 +) (y 1 +)</code></pre>
 
-      <h2>Polymorphism</h2>
-      <p>Type signatures often include <em>type variables</em>, which enable polymorphism. For example, here is a simple recursive function to reverse a vector:
-      <pre><code>def reverse ([a] -&gt; [a]):
-  -&gt;v
-  \if (v isEmpty):
-    []
+        <h2>Polymorphism</h2>
+        <p>Type signatures often include <em>type variables</em>, which enable polymorphism. For example, here is a simple recursive function to reverse a vector:
+        <pre><code>def rev ([a] -&gt; [a]):
+  -&gt;xs
+  \option v last: -&gt;x
+    xs init rev
+    x prepend
   else:
-    v init reverse
-    v last prepend</code></pre>
-      <p>The type variable <code>a</code> allows this function to work on vectors of any element type. The type of the pure <code>map</code> function is <code>[a] (a -&gt; b) -&gt; [b]</code>. It takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values.
-      <pre><code>[3, 6, 9, 12] {3 /} map  // [1, 2, 3, 4]</code></pre>
-      <p>The above example shows how function literals are simply code surrounded by curly braces. <code>{3 /}</code> is a function which divides its argument by 3—it can also be written using a local variable, as <code>{ ->x x 3 / }</code>.
+    []</code></pre>
+        <p>The type variable <code>a</code> allows this function to work on vectors of any element type. It makes use of Kitten’s <code>a?</code> type, pronounced “optional <code>a</code>”, which is either empty with a value of <code>none</code> or full with a value of <code>x some</code>. The <code>option_else</code> function matches on optional values.
+        <p>The type of a pure <code>map</code> function is <code>[a] (a -&gt; b) -&gt; [b]</code>. It takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values.
+        <pre><code>[3, 6, 9, 12] {3 /} map  // [1, 2, 3, 4]</code></pre>
+        <p>The above example reiterates how function literals are simply code surrounded by curly braces. <code>{3 /}</code> is a function which divides its argument by 3—it can also be written using a local variable, as <code>{ ->x x 3 / }</code>.
 
-      <h2>Side Effects</h2>
-      <p>When you write a function that does I/O, you must write the side effect in the type signature as <code>+IO</code>. The <code>say</code> function from the standard library has the type <code>[Char] -&gt; +IO</code>—it takes a string of characters and returns nothing, plus an I/O side-effect.
-      <pre><code>def say ([Char] -&gt; +IO):
+        <h2>Side Effects</h2>
+        <p>When you write a function that does I/O, you must write the side effect in the type signature as <code>+IO</code>. The <code>say</code> function from the standard library has the type <code>[Char] -&gt; +IO</code>—it takes a string of characters and returns nothing, plus an I/O side-effect.
+        <pre><code>def say ([Char] -&gt; +IO):
   print
   "\n" print
 
@@ -166,15 +206,11 @@ def greetAndGetName ([Char] -&gt; [Char] +IO):
   ["Pleased to meet you, ", name, "!"] concat say
   name</code></pre>
 
-      <h2>Effect Polymorphism</h2>
-      <p>You can also write functions which are polymorphic by <em>effect</em>. The <code>map</code> function in the standard library has the type <code>[a] (a -&gt; b +e) -&gt; [b] +e</code>, which means that if its argument does some side effect <code>e</code>, then <code>map</code> also has that side effect.
-      <pre><code>["fee", "fie", "foe", "fum"]
-{
-  -&gt;word
+        <h2>Effect Polymorphism</h2>
+        <p>You can also write functions which are polymorphic by <em>effect</em>. The <code>map</code> function in the standard library has the type <code>[a] (a -&gt; b +e) -&gt; [b] +e</code>, which means that if its argument does some side effect <code>e</code>, then <code>map</code> also has that side effect.
+        <pre><code>\map ["fee", "fie", "foe", "fum"]: -&gt;word
   word say
   word "ble" cat
-}
-map
 
 // Outputs:
 // fee
@@ -184,11 +220,29 @@ map
 //
 // Returns:
 // ["feeble", "fieble", "foeble", "fumble"]</code></pre>
-      <p>The operator to apply a function to the stack is called <code>@</code> (“apply”). Here is a function which takes two functions and returns their composition:
-      <pre><code>def compose ((a -&gt; b +e1) (b -&gt; c +e2) -&gt; (a -&gt; c +e1+e2)):
+        <p>The operator to apply a function to the stack is called <code>@</code> (“apply”). Here is a function which takes two unary functions and returns their composition:
+        <pre><code>def compose ((a -&gt; b +e1) (b -&gt; c +e2) -&gt; (a -&gt; c +e1+e2)):
   -&gt;{ f g }
   { f@ g@ }</code></pre>
-      <p>The first function has effect <code>e1</code> and the second has effect <code>e2</code>, so their composition has effect <code>e1+e2</code>. Currently, the only effects are <code>IO</code> and the default <code>()</code>, meaning “pure”. The composition of two pure functions is pure, and the composition of an impure function with any function is impure.
+        <p>The first function has effect <code>e1</code> and the second has effect <code>e2</code>, so their composition has effect <code>e1+e2</code>. Currently, the only effects are <code>IO</code> and the default <code>()</code>, meaning “pure”. The composition of two pure functions is pure, and the composition of an impure function with any function is impure.
+
+        <h2>Closures and Currying</h2>
+        <p>As you can see in the composition example above, Kitten supports functions which <em>capture</em> local variables. You can use this to write curried functions.
+
+        <pre><code>def curriedAdd (Int -&gt; Int -&gt; Int):
+  -&gt;x
+  { -&gt;y x y + }
+
+32 42 curriedAdd @ sayInt  // 74</code></pre>
+        <p>Note that curried functions must be explicitly applied with <code>@</code>, so it’s preferable to use partial application with <code>{}</code>. Effect annotations apply to the most recent function arrow. You can use parentheses to override this.
+        <pre><code>def pureReturningImpure (Int -&gt; Int -&gt; Int +IO):
+  -&gt;x
+  { -&gt;y x y + dup sayInt }
+
+def impureReturningPure (Int -&gt; (Int -&gt; Int) +IO):
+  -&gt;x
+  { -&gt;y x y + }
+  x sayInt</code></pre>
       </div>
       <div class="clear"></div>
     </article>
