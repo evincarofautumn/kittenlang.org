@@ -190,6 +190,12 @@ code {
 	font-size: larger;
 }
 
+p code {
+	background-color: #ececec;
+	border-radius: 4px;
+	padding: 2px 6px;
+}
+
 pre .nocode {
 	background-color: none;
 	color: #000;
