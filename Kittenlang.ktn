@@ -1,0 +1,206 @@
+def blockBegin ([char] ->):
+  -> name;
+  ["<", name, ">"] printEach
+
+def blockEnd ([char] ->):
+  -> name;
+  ["</", name, ">"] printEach
+
+def block ((->) [char] ->) {
+  -> contents name;
+  name blockBegin
+  contents apply
+  name blockEnd
+}
+
+def printEach ([[char]] ->) {
+  \print each
+}
+
+def attrBlockBegin ([([char] & [char])] [char] ->) {
+  -> attrs name;
+  ["<", name] printEach
+  for each (attrs) -> attr {
+    [ " ",
+      attr first,
+      "='",
+      attr rest,
+      "'"
+    ] printEach
+  }
+  ">" print
+}
+
+def attrBlock ((->) [([char] & [char])] [char] ->) {
+  -> contents attrs name;
+  attrs name attrBlockBegin
+  contents apply
+  name blockEnd
+}
+
+def attrTextBlock ([char] [([char] & [char])] [char] ->) {
+  -> contents attrs name;
+  attrs name attrBlockBegin
+  contents print
+  name blockEnd
+}
+
+def textBlock ([char] [char] ->) {
+  -> contents name;
+  name blockBegin
+  contents print
+  name blockEnd
+}
+
+def doctype (->) {
+  "<!DOCTYPE html>" say
+}
+
+def html ((->) ->) {
+  "<html lang='en'>" print
+  apply
+  "</html>" print
+}
+
+def charset ([char] ->) {
+  "<meta charset='" <...> "'>"
+}
+
+def title ([char] ->) {
+  "title" textBlock
+}
+
+def stylesheet ([char] ->) {
+  "<link rel='stylesheet' type='text/css' href='" <...> "'>"
+}
+
+def body ((->) ->) {
+  "body" block
+}
+
+def p ([char] ->) {
+  "p" textBlock
+}
+
+def blockquote ([char] ->) {
+  "blockquote" textBlock
+}
+
+def googleAnalytics ([char] [char] ->) {
+  -> token domain;
+  [ "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
+  , "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
+  , "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)"
+  , "})(window,document,'script','//www.google-analytics.com/analytics.js','ga');"
+  , "ga('create', '", token, "', '", domain, "');"
+  , "ga('send', 'pageview');"
+  ] concat "script" textBlock
+}
+
+def <...> ([char] [char] [char] ->) {
+  -> contents begin end;
+  [begin, contents, end] printEach
+}
+
+def unorderedList ((->) [([char] & [char])] ->) {
+  "ul" attrBlock
+}
+
+def definitionList ((->) ->) {
+  "dl" block
+}
+
+def definitionItem ([char] [char] ->) {
+  -> term definition;
+  term "dt" textBlock
+  definition "dd" textBlock
+}
+
+def anchor ([char] [([char] & [char])] ->) {
+  "a" attrTextBlock
+}
+
+def item ((->) ->) {
+  "li" block
+}
+
+def anchorItem ([char] [char] ->) {
+  -> contents href;
+  {
+    contents [("href", href)] anchor
+  } item
+}
+
+def topNavigation (->) {
+  { { "Kitten" [("class", "title left"), ("href", "/")] anchor
+      [ ("Introduction", "/intro/")
+      , ("Documentation", "/documentation/")
+      , ("Source Code", "https://github.com/evincarofautumn/kitten/")
+      ] [("class", "right")] anchorList
+    } "body-width" classDiv
+  } "header" block
+}
+
+def classDiv ((->) [char] ->) {
+  -> class;
+  [("class", class)] "div" attrBlock
+}
+
+def navTitle ([char] ->) {
+  [("class", "title")] "h1" attrTextBlock
+}
+
+def h1 ([char] ->) {
+  "h1" textBlock
+}
+
+def h2 ([char] ->) {
+  "h2" textBlock
+}
+
+def anchorList ([([char] & [char])] [([char] & [char])] ->) {
+  -> links attrs;
+  {
+    for each (links) {
+      unpair anchorItem
+    }
+  } attrs unorderedList
+}
+
+def clear (->) {
+  {} "clear" classDiv
+}
+
+def example ([char] ->) {
+  -> contents;
+  { contents "code" textBlock } "pre" block
+}
+
+def pageTemplate ((->) ->) {
+  -> content;
+  doctype
+  { { "UTF-8" charset
+      "Kitten Programming Language" title
+      "/style.css" stylesheet
+    } "head" block
+    { "UA-42446087-1" "kittenlang.org" googleAnalytics
+      topNavigation
+      { {} "logo" classDiv
+        { "Learn" navTitle
+          [ ("Introduction", "/intro/")
+          , ("Tutorial", "/tutorial/")
+          , ("Documentation", "/documentation/")
+          ] [] anchorList
+          "Contribute" navTitle
+          [ ("Source Code", "https://github.com/evincarofautumn/kitten")
+          , ("Bugtracker", "https://github.com/evincarofautumn/kitten/issues")
+          , ("IRC", "irc://freenode.net/#concatenative")
+          ] [] anchorList
+        } "navigation" classDiv
+        content "content" classDiv
+      } [("class", "body-width")] "article" attrBlock
+      clear
+      {} "footer" block
+    } body
+  } html
+}

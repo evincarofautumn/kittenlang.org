@@ -1,0 +1,15 @@
+import Kittenlang
+
+{
+
+"The Kitten Programming Language" h1
+
+"<strong>Kitten</strong> is a statically typed, stack-based functional programming language designed to be simple and fast. It is a <em>concatenative</em> language, combining aspects of imperative and pure functional programming. There is <a href='/intro/'>an introduction</a> available and a <a href='/tutorial/'>tutorial</a> in progress." p
+
+"Example" h2
+
+"<script src='http://gist-it.appspot.com/github/evincarofautumn/kitten/blob/master/test/levenshtein.ktn'></script>" print
+
+"The <a href='https://github.com/evincarofautumn/kitten'>source code</a> is hosted on GitHub, and you can join <a href='irc://freenode.net/#concatenative'>#concatenative on Freenode</a> to keep up with the latest developments." p
+
+} pageTemplate

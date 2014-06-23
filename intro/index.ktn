@@ -1,0 +1,270 @@
+import Kittenlang
+
+{
+
+"Introduction" h1
+
+"This is a quick introduction to Kitten. It glosses over some nuances of using the language in order to provide a fast, high-level overview. For a more complete treatment of how to use Kitten, see the <a href='/tutorial/'>tutorial</a>." p
+
+"Comments" h2
+
+"Comments are C-style. Multi-line comments are allowed to nest." p
+
+"// Single-line comment.
+
+/*
+  Multi-line
+  comment.
+*/
+
+/*
+  Nested
+
+  /* multi-line */
+
+  comment.
+*/" example
+
+"Literals" h2
+
+"Integers consist of decimal digits, or a base prefix and digits in the corresponding base. They have type <code>int</code>." p
+
+"6       // decimal
+0b1010  // binary
+0o755   // octal
+0x10    // hexadecimal" example
+
+"Floating-point numbers consist of decimal digits, a decimal point <code>.</code>, and a fractional part. They have type <code>float</code>." p
+
+"6.28" example
+
+"String literals use double-quotes, and are syntactic sugar for vectors of characters. They have type <code>[char]</code>. Common string escapes are allowed using a backslash <code>\\</code>." p
+
+"\"\"
+\"Meow!\\n\"" example
+
+"Containers" h2
+
+"Vectors are surrounded by square brackets <code>[]</code> with comma-separated elements of the same type. They have type <code>[a]</code> where <code>a</code> is the type of the elements. A trailing comma is allowed." p
+
+"[]
+
+[1, 2, 3]  // [int]
+
+// [[char]]
+[
+  \"four\",
+  \"five\",
+  \"six\",
+]" example
+
+"Tuples are similar to vectors, using parentheses <code>()</code> instead. Tuples may contain elements of different types. A one-element tuple is just the value itself." p
+
+"(1, \"two\", 3.0)  // (int &amp; [char] &amp; float)
+(21, 31)         // (int &amp; int)
+(\"silly\",)       // [char]" example
+
+"Expressions and Stack-based Evaluation" h2
+
+"Kitten is an <em>expression language</em>; there are no statements, only expressions that compute a result. Expressions may use infix operators with different precedences, as in many other languages. Kitten operators are not built into the language—they are ordinary functions with symbolic names." p
+
+"2 * 2 + 3 * 3  // (2 * 2) + (3 * 3)" example
+
+"The biggest syntactic difference between Kitten and C-like languages is that function calls are <em>postfix</em>: the function is named <em>after</em> the arguments. Instead of <code>f(x, y)</code>, we write <code>x y f</code>. We can think of this like a generalization of the method-call syntax <code>x.f()</code> in many object-oriented languages." p
+
+"\"Meow!\\n\" print" example
+
+"Operators can also be called in postfix form by wrapping them in parentheses." p
+
+"2 2 (*) 3 3 (*) (+)" example
+
+"Here we start to see Kitten’s stack-based evaluation model. When computing <code>2 2 (*)</code>, we push <code>2</code> to the <em>data stack</em>, push another <code>2</code>, then call <code>*</code> to multiply them, leaving the result on the stack. So one way to read postfix code is as a sequence of imperative commands operating on the stack." p
+
+"2    // push 2   => 2
+2    // push 2   => 2 2
+(*)  // multiply => 4
+3    // push 3   => 4 3
+3    // push 3   => 4 3 3
+(*)  // multiply => 4 9
+(+)  // add      => 13" example
+
+"Postfix syntax can also be thought of as a flattening of a data flow graph." p
+
+"<table>
+<tr><td><code>2</code></td><td><code>2</code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td class='open'>↓ <code>2</code></td><td class='open'>↓ <code>2</code></td><td class='open'>↓ <code>3</code></td><td class='open'>↓ <code>3</code></td></tr>
+<tr><td colspan='2'><code>*</code></td><td colspan='2'><code>*</code></td></tr>
+<tr><td class='open' colspan='2'>↓ <code>4</code></td><td class='open' colspan='2'>↓ <code>9</code></td></tr>
+<tr><td colspan='4'><code>+</code></td></tr>
+<tr><td class='open' colspan='4'>↓ <code>13</code></td></tr>
+</table>"
+  print
+
+"Conditionals and Blocks" h2
+
+"Conditional execution uses the <code>if (…) {…} else {…}</code> function, which is <em>mixfix</em> for the sake of similarity with C-like languages. Blocks can be surrounded by curly braces <code>{}</code> like in C, or prefixed with a colon <code>:</code> and delimited by indentation like in Python.  The <code>:</code> form desugars into the <code>{}</code> form." p
+
+"if (foodDish isEmpty) {
+  \":(\" say
+  begForFood
+} else {
+  purr
+}
+
+if (foodDish isEmpty):
+  \":(\" say
+  begForFood
+else:
+  purr" example
+
+"Built-in Algebraic Types" h2
+
+"In addition to <code>int</code>, <code>float</code>, <code>char</code>, vectors, and tuples, Kitten has two built-in algebraic data types: <em>option</em> <code>?</code> and <em>choice</em> <code>|</code>." p
+
+"A value of type <code>a?</code> (“optional <code>a</code>”) is either empty with a value of <code>none</code> or full with a value of <code>x some</code>, where <code>x</code> has type <code>a</code>." p
+
+"none    // a?
+5 some  // int?" example
+
+"An instance of <code>a | b</code> (“either <code>a</code> or <code>b</code>”) is either <code>x left</code> or <code>y right</code>, where <code>x</code> has type <code>a</code> and <code>y</code> has type <code>b</code>." p
+
+"// int | char
+if (this = that):
+  1 left
+else:
+  '!' right" example
+
+"The <code>option (…) {…} else {…}</code> function matches against optional values, and the <code>choice_else</code> function matches against choice values." p
+
+"option (xs head):
+  sayInt
+else:
+  \"empty vector\" say
+
+choice (x):
+  sayInt
+else:
+  sayBool" example
+
+"Function Definitions" h2
+
+"New functions are defined with the <code>def</code> keyword. They have a name, a type signature, and a body. Type signatures are written in parentheses; function types use an ASCII rightwards arrow <code>-&gt;</code> or its Unicode equivalent <code>→</code> (U+2192). If no signature is specified, the type can be inferred." p
+
+"def square (int -&gt; int):
+  dup *" example
+
+"A function is called when we mention its name." p
+
+"4 square  // 16" example
+
+"To push a function to the stack instead, wrap it in a block." p
+
+"[1, 2, 3] {square} map" example
+
+"The backslash syntax <code>\\f</code> is a slightly more succinct equivalent, with the advantage that an operator can be referred to as simply <code>\\+</code> instead of <code>{(+)}</code>. Mnemonically, this is “escaping” the function to prevent it from being evaluated." p
+
+"[1, 2, 3] \\square map           // [1, 4, 9]
+[1, 2, 3] [4, 5, 6] \\* zipWith  // [4, 10, 18]" example
+
+"Locals" h2
+
+"Local variables can be introduced with the <code>-&gt; name;</code> syntax (also <code>→ name;</code>). This takes a value from the stack and stores it in a local variable for the remainder of scope. Mentioning a local has the effect of pushing its value to the stack." p
+
+"def square:
+  -&gt; x;
+  x * x" example
+
+"We can also introduce multiple variables at once; they are taken from the stack in the order they were pushed." p
+
+"1 2 3 -&gt; x y z;
+x sayInt  // 1
+y sayInt  // 2
+z sayInt  // 3" example
+
+"Local variables are always immutable. Pushing a local to the stack produces a copy of its value; as an optimization, non-primitive values are copied lazily." p
+
+"Whereas Kitten decouples the concepts of local variable bindings (<code>-&gt; …;</code>) and anonymous functions (<code>{…}</code>), in practice we often want to couple these things together. For example, in the <code>option (…) {…} else {…}</code> function, we often want to name the value we extracted, if one was present. We can use a local variable binding inside a block:" p
+
+"option (xs head):
+  -&gt; x;
+  x sayInt
+else:
+  \"nothing\" say" example
+
+"Or we can use the combined form, <code>-&gt; … { … }</code>, which is compatible with the usual layout rule:" p
+
+"option (xs head) -&gt; x {
+  x sayInt
+} else {
+  \"nothing\" say
+}
+
+option (xs head) -&gt; x:
+  x sayInt
+else:
+  \"nothing\" say" example
+
+"<code>-&gt; x y z { x + y + z }</code> is exactly equivalent to
+<code>{ -&gt; x y z; x + y + z }</code>." p
+
+"Multiple Inputs and Outputs" h2
+
+"Functions can take multiple inputs. In the type signature, their types are separated by spaces. At present there is no overloading: the <code>*</code> operator is for <code>int</code> multiplication, and <code>*.</code> for <code>float</code>." p
+
+"def multiply3 (float float float -&gt; float):
+  -&gt; x y z;
+  x *. y *. z" example
+
+"Notice what happens when we write this function in postfix:" p
+
+"def multiply3:
+  -&gt; x y z;
+  x y z (*.) (*.)" example
+
+"We’re pulling <code>x</code>, <code>y</code>, and <code>z</code> off the stack and pushing them right back! This can of course be optimized away, but it’s redundant. This is a good place to apply Kitten’s common practice of chaining functions <em>without</em> using local variables. We can just pass arguments and return values implicitly on the stack." p
+
+"def multiply3:
+  (*.) (*.)" example
+
+"Functions may also have multiple return values. Wrapping in a tuple is not required, and it would simply interfere with the implicit dataflow style." p
+
+"def incrementBoth (int int -&gt; int int):
+  -&gt; x y;
+  (x + 1) (y + 1)" example
+
+"A semicolon <code>;</code> may be used as an expression separator, to avoid many side-by-side parentheses <code>(…) (…)</code> as above." p
+
+"def incrementBoth (int int -&gt; int int):
+  -&gt; x y;
+  x + 1;
+  y + 1;" example
+
+"Polymorphism" h2
+
+"Type signatures often include <em>type variables</em>, which enable polymorphism. For example, here is a simple recursive function to reverse a vector:" p
+
+"def rev {a}([a] -&gt; [a]):
+  -&gt; xs;
+  option (v last) -&gt; x:
+    xs init rev
+    x prepend
+  else:
+    []" example
+
+"The signature reads:" p
+
+"{a}  // For any type 'a'…
+(
+  [a]  // given a vector of values of that type…
+  -&gt;   // this function produces…
+  [a]  // another vector of values of that type.
+)" example
+
+"Functions may be generic in any number of types. For example, the type of the <code>map</code> function is <code>{a, b}([a] (a -&gt; b) -&gt; [b])</code>. It takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values. <code>a</code> and <code>b</code> may of course refer to the same type." p
+
+"[3, 6, 9, 12] \\showInt map  // [\"3\", \"6\", \"9\", \"12\"]
+[3, 6, 9, 12] {(/ 3)} map   // [1, 2, 3, 4]" example
+
+"Notice the syntax <code>(/ 3)</code>, which is shorthand for <code>-&gt; x; x / 3</code>." p
+
+} pageTemplate
