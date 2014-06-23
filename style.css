@@ -160,7 +160,8 @@ header ul li {
 .content pre,
 .content ul,
 .content dd,
-.content blockquote {
+.content blockquote,
+.content table {
 	margin-bottom: 2em;
 }
 
@@ -182,6 +183,19 @@ header ul li {
 .navigation ul {
 	list-style: none;
 	margin-bottom: 1em;
+}
+
+/* Tables */
+
+td {
+	border: 1px solid #888;
+	padding: 1em 2em;
+    margin: 0;
+	text-align: center;
+}
+
+td.open {
+	border: none;
 }
 
 /* Code and syntax highlighting */
