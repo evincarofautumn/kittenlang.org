@@ -88,7 +88,7 @@ import Kittenlang
 (*)  // multiply => 4 9
 (+)  // add      => 13" example
 
-"Postfix syntax can also be thought of as a flattening of a data flow graph." p
+"However, this is the low-level way to think about Kitten programs. At a high level, postfix syntax can be thought of as representing a data flow graph." p
 
 "<table>
 <tr><td><code>2</code></td><td><code>2</code></td><td><code>3</code></td><td><code>3</code></td></tr>
@@ -102,7 +102,7 @@ import Kittenlang
 
 "Conditionals and Blocks" h2
 
-"Conditional execution uses the <code>if (…) {…} else {…}</code> function, which is <em>mixfix</em> for the sake of similarity with C-like languages. Blocks can be surrounded by curly braces <code>{}</code> like in C, or prefixed with a colon <code>:</code> and delimited by indentation like in Python.  The <code>:</code> form desugars into the <code>{}</code> form." p
+"Conditional execution uses the <code>if (…) {…} else {…}</code> function, which is <em>mixfix</em> for the sake of similarity with C-like languages. Blocks can be surrounded by curly braces <code>{}</code> like in C, or prefixed with a colon <code>:</code> and delimited by indentation like in Python. The <code>:</code> form desugars into the <code>{}</code> form." p
 
 "if (foodDish isEmpty) {
   \":(\" say
@@ -134,7 +134,7 @@ if (this = that):
 else:
   '!' right" example
 
-"The <code>option (…) {…} else {…}</code> function matches against optional values, and the <code>choice_else</code> function matches against choice values." p
+"The <code>option (…) {…} else {…}</code> function matches on options, and the <code>choice (…) {…} else {…}</code> function matches on choices." p
 
 "option (xs head):
   sayInt
