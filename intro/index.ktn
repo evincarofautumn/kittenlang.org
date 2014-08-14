@@ -117,7 +117,7 @@ if (foodDish isEmpty):
 else:
   purr" example
 
-"Built-in Algebraic Types" h2
+"Built-in Data Types" h2
 
 "In addition to <code>int</code>, <code>float</code>, <code>char</code>, vectors, and tuples, Kitten has two built-in algebraic data types: <em>option</em> <code>?</code> and <em>choice</em> <code>|</code>." p
 
@@ -266,5 +266,54 @@ else:
 [3, 6, 9, 12] {(/ 3)} map   // [1, 2, 3, 4]" example
 
 "Notice the syntax <code>(/ 3)</code>, which is shorthand for <code>-&gt; x; x / 3</code>." p
+
+"User-defined Data Types" h2
+
+"You can also define your own data types with a <code>data</code> definition. There are two “simple” kinds of data types you may be familiar with from C. Enumerations:" p
+
+"data Bool:
+  case True;
+  case False;
+  case FileNotFound;" example
+
+"And structures:" p
+
+"data Point:
+  case Point float float;" example
+
+"You can construct an instance of your data type by calling its constructor with all the fields as parameters." p
+
+"1.5 2.5 Point -&gt; p;" example
+
+"In order to use the values of these fields, you can deconstruct an instance of your data type with a <code>match</code> expression:" p
+
+"match (p):
+  case Point -&gt; x y:
+    x sayFloat
+    y sayFloat" example
+
+"A data type may include multiple constructors with fields; this is like a tagged <code>union</code> in C:" p
+
+"data IntOrString:
+  case Nothing;
+  case Int int;
+  case String [char];" example
+
+"When matching on a value of such a type, you simply include multiple <code>case</code> branches." p
+
+"match (intOrString):
+  case Nothing:
+    \"nothing\" say
+  case Int -> i:
+    i sayInt
+  case String:  // Names are never required!
+    say" example
+
+"If you do not match all possible cases, pattern matching may fail at runtime. To change the default behavior of aborting the task, you can specify a <code>default</code> branch." p
+
+"match (intOrString):
+  case Int: sayInt
+  default:
+    \"I only care about integers.\" say" example
 
 } pageTemplate
