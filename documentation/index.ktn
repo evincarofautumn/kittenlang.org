@@ -4,6 +4,6 @@ import Kittenlang
 
 "Documentation" h1
 
-"Kitten is currently in a state of active development, and documentation is limited. This will be an index of reference documentation for using Kitten. For an overview, try the <a href='/tutorial/'>tutorial</a>." p
+"Kitten is currently in a state of active development, and documentation is limited. This will be an index of reference documentation for using Kitten. For an overview, try the <a href='/intro/'>introduction</a>." p
 
 } pageTemplate
