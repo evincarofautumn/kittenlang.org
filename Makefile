@@ -9,6 +9,9 @@ default : $(foreach TARGET,$(TARGETS),$(TARGET)/index.html)
 clean :
 	find . -name '*.html' -exec rm {} +
 
+deploy :
+	@ ./deploy.sh $(TARGETS)
+
 define HTML_KTN_RULE
 $1/index.html : $1/index.ktn
 	$(KITTEN) "$$<" > "$$@"
