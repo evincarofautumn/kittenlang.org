@@ -70,6 +70,10 @@ def title ([char] ->) {
   "title" textBlock
 }
 
+def favicon ([char] ->) {
+  "<link rel='icon' href='" <...> "'>"
+}
+
 def stylesheet ([char] ->) {
   "<link rel='stylesheet' type='text/css' href='" <...> "'>"
 }
@@ -183,6 +187,7 @@ def pageTemplate ((->) ->) {
   { { "UTF-8" charset
       "Kitten Programming Language" title
       "/style.css" stylesheet
+      "/favicon.ico" favicon
     } "head" block
     { "UA-42446087-1" "kittenlang.org" googleAnalytics
       topNavigation
