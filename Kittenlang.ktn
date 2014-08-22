@@ -135,7 +135,7 @@ def anchorItem ([char] [char] ->) {
 def topNavigation (->) {
   { { "Kitten" [("class", "title left"), ("href", "/")] anchor
       [ ("Introduction", "/intro/")
-      , ("Documentation", "/documentation/")
+      , ("FAQ", "/faq/")
       , ("Source Code", "https://github.com/evincarofautumn/kitten/")
       ] [("class", "right")] anchorList
     } "body-width" classDiv
@@ -188,7 +188,8 @@ def pageTemplate ((->) ->) {
       topNavigation
       { {} "logo" classDiv
         { "Learn" navTitle
-          [ ("Introduction", "/intro/")
+          [ ("FAQ", "/faq/")
+          , ("Introduction", "/intro/")
           , ("Tutorial", "/tutorial/")
           , ("Documentation", "/documentation/")
           ] [] anchorList

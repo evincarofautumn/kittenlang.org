@@ -1,5 +1,5 @@
 KITTEN?=kitten
-TARGETS:=. documentation intro tutorial
+TARGETS:=. documentation faq intro tutorial
 MAKEFLAGS+=--warn-undefined-variables
 
 .PHONY : default clean
