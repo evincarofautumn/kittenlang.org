@@ -243,9 +243,9 @@ else:
 
 "Type signatures often include <em>type variables</em>, which enable polymorphism. For example, here is a simple recursive function to reverse a vector:" p
 
-"def rev {a}([a] -&gt; [a]):
+"def rev @ a ([a] -&gt; [a]):
   -&gt; xs;
-  option (v last) -&gt; x:
+  option (xs last) -&gt; x:
     xs init rev
     x prepend
   else:
@@ -253,14 +253,24 @@ else:
 
 "The signature reads:" p
 
-"{a}  // For any type 'a'…
+"@ a  // For any type 'a'…
 (
   [a]  // given a vector of values of that type…
   -&gt;   // this function produces…
   [a]  // another vector of values of that type.
 )" example
 
-"Functions may be generic in any number of types. For example, the type of the <code>map</code> function is <code>{a, b}([a] (a -&gt; b) -&gt; [b])</code>. It takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values. <code>a</code> and <code>b</code> may of course refer to the same type." p
+"The at sign <code>@</code> is an ASCII approximation of the Unicode “for all” symbol <code>∀</code> (U+2200), which you may also use:" p
+
+"def rev ∀ a ([a] → [a]):
+  → xs;
+  option (xs last) → x:
+    xs init rev
+    x prepend
+  else:
+    []" example
+
+"Functions may be generic in any number of types. For example, the type of the <code>map</code> function is <code>@ a b ([a] (a -&gt; b) -&gt; [b])</code>. It takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values. <code>a</code> and <code>b</code> may of course refer to the same type." p
 
 "[3, 6, 9, 12] \\showInt map  // [\"3\", \"6\", \"9\", \"12\"]
 [3, 6, 9, 12] {(/ 3)} map   // [1, 2, 3, 4]" example
