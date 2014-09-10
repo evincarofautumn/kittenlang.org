@@ -20,7 +20,7 @@ def printEach ([[char]] ->) {
 def attrBlockBegin ([([char] & [char])] [char] ->) {
   -> attrs name;
   ["<", name] printEach
-  for each (attrs) -> attr {
+  forEach (attrs) -> attr {
     [ " ",
       attr first,
       "='",
@@ -166,7 +166,7 @@ def h2 ([char] ->) {
 def anchorList ([([char] & [char])] [([char] & [char])] ->) {
   -> links attrs;
   {
-    for each (links) {
+    forEach (links) {
       unpair anchorItem
     }
   } attrs unorderedList
