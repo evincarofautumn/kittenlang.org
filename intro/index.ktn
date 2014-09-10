@@ -151,7 +151,7 @@ else:
 "New functions are defined with the <code>def</code> keyword. They have a name, a type signature, and a body. Type signatures are written in parentheses; function types use an ASCII rightwards arrow <code>-&gt;</code> or its Unicode equivalent <code>→</code> (U+2192). If no signature is specified, the type can be inferred." p
 
 "def square (int -&gt; int):
-  dup *" example
+  dup (*)" example
 
 "A function is called when we mention its name." p
 
