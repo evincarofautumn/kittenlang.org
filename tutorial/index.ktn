@@ -134,9 +134,9 @@ meow" example
 [1,2,3]
 [2,4,6]" example
 
-"<code>{2 (*)}</code> is a function which takes an integer on the stack and multiplies it by 2. You can think of it as the <code>*</code> operator, with <code>2</code> pre-bound as the second argument. We can give this function a name using <code>def</code>, so we don’t have to repeat its implementation if we want to use it again." p
+"<code>{2 (*)}</code> is a function which takes an integer on the stack and multiplies it by 2. You can think of it as the <code>*</code> operator, with <code>2</code> pre-bound as the second argument. We can give this function a name using <code>define</code>, so we don’t have to repeat its implementation if we want to use it again." p
 
-"&gt;&gt;&gt; <kbd>def twice (int -&gt; int) { 2 (*) }</kbd>" example
+"&gt;&gt;&gt; <kbd>define twice (int -&gt; int) { 2 (*) }</kbd>" example
 
 "Here we see a <em>type signature</em>." p
 
@@ -171,10 +171,10 @@ Hello, world!
 ["this thing","that thing","more thing"]
 </code></pre>
         <p>Oops, we need a plural. How do we modify the last element of a vector? Kitten doesn’t let us mutate values directly, so we have to think in terms of functions. Let’s define a function to do the job for us, then go over all the moving parts. Kitten lets us enter multi-line statements at the prompt—as long as our braces and parentheses don’t match, it assumes we have more to say.
-        <pre><code>&gt;&gt;&gt; <kbd>def mapLast {</kbd>
+        <pre><code>&gt;&gt;&gt; <kbd>define mapLast {</kbd>
 ...   <kbd>-&gt;{ vector function }</kbd>
 ...   <kbd>vector init</kbd>
-...   <kbd>[vector last function @]</kbd>
+...   <kbd>[vector last function apply]</kbd>
 ...   <kbd>cat</kbd>
 ... <kbd>}</kbd>
 </code></pre>
@@ -184,14 +184,14 @@ Hello, world!
 
 &gt;&gt;&gt; <kbd>[0, 1] {++} mapLast</kbd>
 [0, 2]</code></pre>
-        <p>It works! So let’s break it down, piece by piece. The <code>init</code>, <code>last</code>, and <code>@</code> functions are simple. <code>last</code> gets the last element of a vector…
+        <p>It works! So let’s break it down, piece by piece. The <code>init</code>, <code>last</code>, and <code>apply</code> functions are simple. <code>last</code> gets the last element of a vector…
         <pre><code>&gt;&gt;&gt; <kbd>[1, 2, 3] last</kbd>
 3</code></pre>
         <p>…the <code>init</code> function gets all but the last…
         <pre><code>&gt;&gt;&gt; <kbd>[1, 2, 3] init</kbd>
 [1,2]</code></pre>
-        <p>…and <code>@</code> applies a function to the stack, essentially unwrapping the curly braces.
-        <pre><code>&gt;&gt;&gt; <kbd>1 {2 +} @</kbd>
+        <p>…and <code>apply</code> applies a function to the stack, essentially unwrapping the curly braces.
+        <pre><code>&gt;&gt;&gt; <kbd>1 {2 (+)} apply</kbd>
 3</code></pre>
         <p>Now you can begin to see how it all comes together. The missing piece is the <code>-&gt;</code> syntax at the start of the function. That’s Kitten’s way of introducing <em>local variables</em>, in this case named <code>function</code> (the function to apply) and <code>vector</code> (the vector to apply it to). We can introduce multiple names at once with <code>-&gt;{ x y z }</code>, or a single name with <code>-&gt;x</code>; either way, the values are taken from the stack and stored in the corresponding names until the end of the current block.
 

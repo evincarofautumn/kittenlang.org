@@ -1,23 +1,23 @@
-def blockBegin ([char] ->):
+define blockBegin ([char] ->):
   -> name;
   ["<", name, ">"] printEach
 
-def blockEnd ([char] ->):
+define blockEnd ([char] ->):
   -> name;
   ["</", name, ">"] printEach
 
-def block ((->) [char] ->) {
+define block ((->) [char] ->) {
   -> contents name;
   name blockBegin
   contents apply
   name blockEnd
 }
 
-def printEach ([[char]] ->) {
+define printEach ([[char]] ->) {
   \print each
 }
 
-def attrBlockBegin ([([char] & [char])] [char] ->) {
+define attrBlockBegin ([([char] & [char])] [char] ->) {
   -> attrs name;
   ["<", name] printEach
   forEach (attrs) -> attr {
@@ -31,66 +31,66 @@ def attrBlockBegin ([([char] & [char])] [char] ->) {
   ">" print
 }
 
-def attrBlock ((->) [([char] & [char])] [char] ->) {
+define attrBlock ((->) [([char] & [char])] [char] ->) {
   -> contents attrs name;
   attrs name attrBlockBegin
   contents apply
   name blockEnd
 }
 
-def attrTextBlock ([char] [([char] & [char])] [char] ->) {
+define attrTextBlock ([char] [([char] & [char])] [char] ->) {
   -> contents attrs name;
   attrs name attrBlockBegin
   contents print
   name blockEnd
 }
 
-def textBlock ([char] [char] ->) {
+define textBlock ([char] [char] ->) {
   -> contents name;
   name blockBegin
   contents print
   name blockEnd
 }
 
-def doctype (->) {
+define doctype (->) {
   "<!DOCTYPE html>" say
 }
 
-def html ((->) ->) {
+define html ((->) ->) {
   "<html lang='en'>" print
   apply
   "</html>" print
 }
 
-def charset ([char] ->) {
+define charset ([char] ->) {
   "<meta charset='" <...> "'>"
 }
 
-def title ([char] ->) {
+define title ([char] ->) {
   "title" textBlock
 }
 
-def favicon ([char] ->) {
+define favicon ([char] ->) {
   "<link rel='icon' href='" <...> "'>"
 }
 
-def stylesheet ([char] ->) {
+define stylesheet ([char] ->) {
   "<link rel='stylesheet' type='text/css' href='" <...> "'>"
 }
 
-def body ((->) ->) {
+define body ((->) ->) {
   "body" block
 }
 
-def p ([char] ->) {
+define p ([char] ->) {
   "p" textBlock
 }
 
-def blockquote ([char] ->) {
+define blockquote ([char] ->) {
   "blockquote" textBlock
 }
 
-def googleAnalytics ([char] [char] ->) {
+define googleAnalytics ([char] [char] ->) {
   -> token domain;
   [ "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
   , "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
@@ -102,41 +102,41 @@ def googleAnalytics ([char] [char] ->) {
   ] concat "script" textBlock
 }
 
-def <...> ([char] [char] [char] ->) {
+define <...> ([char] [char] [char] ->) {
   -> contents begin end;
   [begin, contents, end] printEach
 }
 
-def unorderedList ((->) [([char] & [char])] ->) {
+define unorderedList ((->) [([char] & [char])] ->) {
   "ul" attrBlock
 }
 
-def definitionList ((->) ->) {
+define definitionList ((->) ->) {
   "dl" block
 }
 
-def definitionItem ([char] [char] ->) {
+define definitionItem ([char] [char] ->) {
   -> term definition;
   term "dt" textBlock
   definition "dd" textBlock
 }
 
-def anchor ([char] [([char] & [char])] ->) {
+define anchor ([char] [([char] & [char])] ->) {
   "a" attrTextBlock
 }
 
-def item ((->) ->) {
+define item ((->) ->) {
   "li" block
 }
 
-def anchorItem ([char] [char] ->) {
+define anchorItem ([char] [char] ->) {
   -> contents href;
   {
     contents [("href", href)] anchor
   } item
 }
 
-def topNavigation (->) {
+define topNavigation (->) {
   { { "Kitten" [("class", "title left"), ("href", "/")] anchor
       [ ("Introduction", "/intro/")
       , ("FAQ", "/faq/")
@@ -146,24 +146,24 @@ def topNavigation (->) {
   } "header" block
 }
 
-def classDiv ((->) [char] ->) {
+define classDiv ((->) [char] ->) {
   -> class;
   [("class", class)] "div" attrBlock
 }
 
-def navTitle ([char] ->) {
+define navTitle ([char] ->) {
   [("class", "title")] "h1" attrTextBlock
 }
 
-def h1 ([char] ->) {
+define h1 ([char] ->) {
   "h1" textBlock
 }
 
-def h2 ([char] ->) {
+define h2 ([char] ->) {
   "h2" textBlock
 }
 
-def anchorList ([([char] & [char])] [([char] & [char])] ->) {
+define anchorList ([([char] & [char])] [([char] & [char])] ->) {
   -> links attrs;
   {
     forEach (links) {
@@ -172,16 +172,16 @@ def anchorList ([([char] & [char])] [([char] & [char])] ->) {
   } attrs unorderedList
 }
 
-def clear (->) {
+define clear (->) {
   {} "clear" classDiv
 }
 
-def example ([char] ->) {
+define example ([char] ->) {
   -> contents;
   { contents "code" textBlock } "pre" block
 }
 
-def pageTemplate ((->) ->) {
+define pageTemplate ((->) ->) {
   -> content;
   doctype
   { { "UTF-8" charset

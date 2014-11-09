@@ -148,9 +148,9 @@ else:
 
 "Function Definitions" h2
 
-"New functions are defined with the <code>def</code> keyword. They have a name, a type signature, and a body. Type signatures are written in parentheses; function types use an ASCII rightwards arrow <code>-&gt;</code> or its Unicode equivalent <code>→</code> (U+2192). If no signature is specified, the type can be inferred." p
+"New functions are defined with the <code>define</code> keyword. They have a name, a type signature, and a body. Type signatures are written in parentheses; function types use an ASCII rightwards arrow <code>-&gt;</code> or its Unicode equivalent <code>→</code> (U+2192). If no signature is specified, the type can be inferred." p
 
-"def square (int -&gt; int):
+"define square (int -&gt; int):
   dup (*)" example
 
 "A function is called when we mention its name." p
@@ -170,7 +170,7 @@ else:
 
 "Local variables can be introduced with the <code>-&gt; name;</code> syntax (also <code>→ name;</code>). This takes a value from the stack and stores it in a local variable for the remainder of scope. Mentioning a local has the effect of pushing its value to the stack." p
 
-"def square:
+"define square:
   -&gt; x;
   x * x" example
 
@@ -205,36 +205,42 @@ else:
   \"nothing\" say" example
 
 "<code>-&gt; x y z { x + y + z }</code> is exactly equivalent to
-<code>{ -&gt; x y z; x + y + z }</code>." p
+<code>{ -&gt; x y z; x + y + z }</code>. Note that this also works on definitions." p
+
+"define square (int -&gt; int)
+  -&gt; x
+{
+  x * x
+}" example
 
 "Multiple Inputs and Outputs" h2
 
 "Functions can take multiple inputs. In the type signature, their types are separated by spaces. At present there is no overloading: the <code>*</code> operator is for <code>int</code> multiplication, and <code>*.</code> for <code>float</code>." p
 
-"def multiply3 (float float float -&gt; float):
+"define multiply3 (float float float -&gt; float):
   -&gt; x y z;
   x *. y *. z" example
 
 "Notice what happens when we write this function in postfix:" p
 
-"def multiply3:
+"define multiply3:
   -&gt; x y z;
   x y z (*.) (*.)" example
 
 "We’re pulling <code>x</code>, <code>y</code>, and <code>z</code> off the stack and pushing them right back! This can of course be optimized away, but it’s redundant. This is a good place to apply Kitten’s common practice of chaining functions <em>without</em> using local variables. We can just pass arguments and return values implicitly on the stack." p
 
-"def multiply3:
+"define multiply3:
   (*.) (*.)" example
 
 "Functions may also have multiple return values. Wrapping in a tuple is not required, and it would simply interfere with the implicit dataflow style." p
 
-"def incrementBoth (int int -&gt; int int):
+"define incrementBoth (int int -&gt; int int):
   -&gt; x y;
   (x + 1) (y + 1)" example
 
 "A semicolon <code>;</code> may be used as an expression separator, to avoid many side-by-side parentheses <code>(…) (…)</code> as above." p
 
-"def incrementBoth (int int -&gt; int int):
+"define incrementBoth (int int -&gt; int int):
   -&gt; x y;
   x + 1;
   y + 1;" example
@@ -243,7 +249,7 @@ else:
 
 "Type signatures often include <em>type variables</em>, which enable polymorphism. For example, here is a simple recursive function to reverse a vector:" p
 
-"def rev @ a ([a] -&gt; [a]):
+"define rev&lt;a&gt; ([a] -&gt; [a]):
   -&gt; xs;
   option (xs last) -&gt; x:
     xs init rev
@@ -253,43 +259,33 @@ else:
 
 "The signature reads:" p
 
-"@ a  // For any type 'a'…
+"&lt;a&gt;  // For any type 'a'…
 (
   [a]  // given a vector of values of that type…
   -&gt;   // this function produces…
   [a]  // another vector of values of that type.
 )" example
 
-"The at sign <code>@</code> is an ASCII approximation of the Unicode “for all” symbol <code>∀</code> (U+2200), which you may also use:" p
-
-"def rev ∀ a ([a] → [a]):
-  → xs;
-  option (xs last) → x:
-    xs init rev
-    x prepend
-  else:
-    []" example
-
-"Functions may be generic in any number of types. For example, the type of the <code>map</code> function is <code>@ a b ([a] (a -&gt; b) -&gt; [b])</code>. It takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values. <code>a</code> and <code>b</code> may of course refer to the same type." p
+"Functions may be generic in any number of types. For example, the type of the <code>map</code> function is <code>&lt;a, b&gt; ([a] (a -&gt; b) -&gt; [b])</code>. It takes a vector of <code>a</code> values, and a function from <code>a</code> to <code>b</code>, and returns a vector of <code>b</code> values. <code>a</code> and <code>b</code> may of course refer to the same type." p
 
 "[3, 6, 9, 12] \\showInt map  // [\"3\", \"6\", \"9\", \"12\"]
 [3, 6, 9, 12] {(/ 3)} map   // [1, 2, 3, 4]" example
 
-"Notice the syntax <code>(/ 3)</code>, which is shorthand for <code>-&gt; x; x / 3</code>." p
+"Notice the syntax <code>(/ 3)</code>, which is shorthand for <code>-&gt; x; x / 3</code>. This is called an <em>operator section</em>. Sections are infix operators applied to only one of their arguments, like <code>(/ 3)</code> (divide by three) or <code>(1 +)</code> (add one)." p
 
 "User-defined Data Types" h2
 
 "You can also define your own data types with a <code>data</code> definition. There are two “simple” kinds of data types you may be familiar with from C. Enumerations:" p
 
 "data Bool:
-  case True;
-  case False;
-  case FileNotFound;" example
+  case True
+  case False
+  case FileNotFound" example
 
 "And structures:" p
 
 "data Point:
-  case Point float float;" example
+  case Point (float, float)" example
 
 "You can construct an instance of your data type by calling its constructor with all the fields as parameters." p
 
@@ -305,16 +301,16 @@ else:
 "A data type may include multiple constructors with fields; this is like a tagged <code>union</code> in C:" p
 
 "data IntOrString:
-  case Nothing;
-  case Int int;
-  case String [char];" example
+  case Nothing
+  case Int (int)
+  case String ([char])" example
 
 "When matching on a value of such a type, you simply include multiple <code>case</code> branches." p
 
 "match (intOrString):
   case Nothing:
     \"nothing\" say
-  case Int -> i:
+  case Int -&gt; i:
     i sayInt
   case String:  // Names are never required!
     say" example
