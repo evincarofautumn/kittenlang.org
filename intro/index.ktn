@@ -238,12 +238,11 @@ else:
   -&gt; x y;
   (x + 1) (y + 1)" example
 
-"A semicolon <code>;</code> may be used as an expression separator, to avoid many side-by-side parentheses <code>(…) (…)</code> as above." p
+"The low-precedence semicolon <code>;</code> operator may be used as an expression separator, to avoid many side-by-side parentheses <code>(…) (…)</code> as above." p
 
 "define incrementBoth (int int -&gt; int int):
   -&gt; x y;
-  x + 1;
-  y + 1;" example
+  x + 1; y + 1" example
 
 "Polymorphism" h2
 
