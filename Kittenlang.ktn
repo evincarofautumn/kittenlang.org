@@ -160,7 +160,7 @@ define top_navigation (-> +IO):
       do ([("class" => "right")] anchor_list) [
         ("Introduction" => "/intro/"),
         ("FAQ"          => "/faq/"),
-        ("Source Code"  => "https://github.com/evincarofautumn/kitten/"),
+        ("Source"       => "https://github.com/evincarofautumn/kitten/"),
       ]
 
 define class_div ((-> +IO), List<Char> /* Text */ -> +IO):
