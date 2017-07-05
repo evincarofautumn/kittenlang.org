@@ -1,6 +1,4 @@
-import Kittenlang
-
-{
+do (page_template) {
 
 "The Kitten Programming Language" h1
 
@@ -12,4 +10,4 @@ import Kittenlang
 
 "The <a href='https://github.com/evincarofautumn/kitten'>source code</a> is hosted on GitHub, and you can join <a href='irc://freenode.net/#concatenative'>#concatenative on Freenode</a> to keep up with the latest developments." p
 
-} pageTemplate
+}

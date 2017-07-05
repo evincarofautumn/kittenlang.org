@@ -1,6 +1,4 @@
-import Kittenlang
-
-{
+do (page_template) {
 
 "FAQ" h1
 
@@ -34,4 +32,4 @@ import Kittenlang
 
 "In addition, stack-based resource management has predictable runtime performance behavior: when you drop a value from the stack, it gets deallocated, no garbage collector required. That’s important for games and services where unpredictable GC pauses are not acceptable. In practice, it is more efficient to use a GC for some things, but this should be opt-in." p
 
-} pageTemplate
+}

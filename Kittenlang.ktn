@@ -1,213 +1,191 @@
-define blockBegin ([char] ->):
-  -> name;
-  ["<", name, ">"] printEach
-
-define blockEnd ([char] ->):
-  -> name;
-  ["</", name, ">"] printEach
-
-define block ((->) [char] ->) {
-  -> contents name;
-  name blockBegin
-  contents apply
-  name blockEnd
-}
-
-define printEach ([[char]] ->) {
-  \print each
-}
-
-define attrBlockBegin ([([char] & [char])] [char] ->) {
-  -> attrs name;
-  ["<", name] printEach
-  forEach (attrs) -> attr {
-    [ " ",
-      attr first,
-      "='",
-      attr rest,
-      "'"
-    ] printEach
-  }
-  ">" print
-}
-
-define attrBlock ((->) [([char] & [char])] [char] ->) {
-  -> contents attrs name;
-  attrs name attrBlockBegin
-  contents apply
-  name blockEnd
-}
-
-define attrTextBlock ([char] [([char] & [char])] [char] ->) {
-  -> contents attrs name;
-  attrs name attrBlockBegin
-  contents print
-  name blockEnd
-}
-
-define textBlock ([char] [char] ->) {
-  -> contents name;
-  name blockBegin
-  contents print
-  name blockEnd
-}
-
-define doctype (->) {
-  "<!DOCTYPE html>" say
-}
-
-define html ((->) ->) {
-  "<html lang='en'>" print
-  apply
-  "</html>" print
-}
-
-define charset ([char] ->) {
-  "<meta charset='" <...> "'>"
-}
-
-define title ([char] ->) {
-  "title" textBlock
-}
-
-define favicon ([char] ->) {
-  "<link rel='icon' href='" <...> "'>"
-}
-
-define stylesheet ([char] ->) {
-  "<link rel='stylesheet' type='text/css' href='" <...> "'>"
-}
-
-define body ((->) ->) {
-  "body" block
-}
-
-define p ([char] ->) {
-  "p" textBlock
-}
-
-define blockquote ([char] ->) {
-  "blockquote" textBlock
-}
-
-define googleAnalytics ([char] [char] ->) {
-  -> token domain;
-  [ "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
-  , "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
-  , "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)"
-  , "})(window,document,'script','//www.google-analytics.com/analytics.js','ga');"
-  , "ga('create','", token, "','", domain, "');"
-  , "ga('require','displayfeatures');"
-  , "ga('send','pageview');"
-  ] concat "script" textBlock
-}
-
-define <...> ([char] [char] [char] ->) {
-  -> contents begin end;
-  [begin, contents, end] printEach
-}
-
-define unorderedList ((->) [([char] & [char])] ->) {
-  "ul" attrBlock
-}
-
-define definitionList ((->) ->) {
-  "dl" block
-}
-
-define definitionItem ([char] [char] ->) {
-  -> term definition;
-  term "dt" textBlock
-  definition "dd" textBlock
-}
-
-define anchor ([char] [([char] & [char])] ->) {
-  "a" attrTextBlock
-}
-
-define item ((->) ->) {
-  "li" block
-}
-
-define anchorItem ([char] [char] ->) {
-  -> contents href;
-  {
-    contents [("href", href)] anchor
-  } item
-}
-
-define topNavigation (->) {
-  { { "Kitten" [("class", "title left"), ("href", "/")] anchor
-      [ ("Introduction", "/intro/")
-      , ("FAQ", "/faq/")
-      , ("Source Code", "https://github.com/evincarofautumn/kitten/")
-      ] [("class", "right")] anchorList
-    } "body-width" classDiv
-  } "header" block
-}
-
-define classDiv ((->) [char] ->) {
-  -> class;
-  [("class", class)] "div" attrBlock
-}
-
-define navTitle ([char] ->) {
-  [("class", "title")] "h1" attrTextBlock
-}
-
-define h1 ([char] ->) {
-  "h1" textBlock
-}
-
-define h2 ([char] ->) {
-  "h2" textBlock
-}
-
-define anchorList ([([char] & [char])] [([char] & [char])] ->) {
-  -> links attrs;
-  {
-    forEach (links) {
-      unpair anchorItem
-    }
-  } attrs unorderedList
-}
-
-define clear (->) {
-  {} "clear" classDiv
-}
-
-define example ([char] ->) {
-  -> contents;
-  { contents "code" textBlock } "pre" block
-}
-
-define pageTemplate ((->) ->) {
+define page_template ((-> +IO) -> +IO):
   -> content;
   doctype
-  { { "UTF-8" charset
+  do (html):
+    do ("head" block):
+      "UTF-8" charset
       "Kitten Programming Language" title
       "/style.css" stylesheet
       "/favicon.ico" favicon
-    } "head" block
-    { "UA-42446087-1" "kittenlang.org" googleAnalytics
-      topNavigation
-      { {} "logo" classDiv
-        { "Learn" navTitle
-          [ ("FAQ", "/faq/")
-          , ("Introduction", "/intro/")
-          , ("Tutorial", "/tutorial/")
-          , ("Documentation", "/documentation/")
-          ] [] anchorList
-          "Contribute" navTitle
-          [ ("Source Code", "https://github.com/evincarofautumn/kitten")
-          , ("Bugtracker", "https://github.com/evincarofautumn/kitten/issues")
-          , ("IRC", "irc://freenode.net/#concatenative")
-          ] [] anchorList
-        } "navigation" classDiv
-        content "content" classDiv
-      } [("class", "body-width")] "article" attrBlock
+    do (body):
+      "UA-42446087-1" "kittenlang.org" google_analytics
+      top_navigation
+      do ([("class" => "body-width")] "article" attr_block):
+        {} "logo" class_div
+        do ("navigation" class_div):
+          "Learn" nav_title
+          do ([] anchor_list) [
+            ("FAQ"           => "/faq/"),
+            ("Introduction"  => "/intro/"),
+            ("Tutorial"      => "/tutorial/"),
+            ("Documentation" => "/documentation/"),
+          ]
+          "Contribute" nav_title
+          do ([] anchor_list) [
+            ("Source" => "https://github.com/evincarofautumn/kitten"),
+            ("Issues" => "https://github.com/evincarofautumn/kitten/issues"),
+            ("IRC"    => "irc://freenode.net/#concatenative"),
+          ]
+        content "content" class_div
       clear
       {} "footer" block
-    } body
-  } html
-}
+
+define block_begin (List<Char> /* Text */ -> +IO):
+  -> name;
+  ["<", name, ">"] print_each
+
+define block_end (List<Char> /* Text */ -> +IO):
+  -> name;
+  ["</", name, ">"] print_each
+
+define block ((-> +IO), List<Char> /* Text */ -> +IO):
+  -> contents, name;
+  name block_begin
+  contents call
+  name block_end
+
+define print_each (List<List<Char> /* Text */> -> +IO):
+  \print each
+
+// type synonym Attr (Pair<List<Char> /* Text */, List<Char> /* Text */>)
+
+// type synonym Attrs (List<Attr>)
+
+define attr_block_begin (List<Pair<List<Char>, List<Char>>> /* Attrs */, List<Char> /* Text */ -> +IO):
+  -> attrs, name;
+  ["<", name] print_each
+  attrs do (each) -> attr:
+    [
+      " ",
+      attr first,
+      "='",
+      attr second,
+      "'",
+    ] print_each
+  ">" print
+
+define attr_block ((-> +IO), List<Pair<List<Char>, List<Char>>> /* Attrs */, List<Char> /* Text */ -> +IO):
+  -> contents, attrs, name;
+  attrs name attr_block_begin
+  contents call
+  name block_end
+
+define attr_text_block (List<Char> /* Text */, List<Pair<List<Char>, List<Char>>> /* Attrs */, List<Char> /* Text */ -> +IO):
+  -> contents, attrs, name;
+  attrs name attr_block_begin
+  contents print
+  name block_end
+
+define text_block (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> contents, name;
+  name block_begin
+  contents print
+  name block_end
+
+define doctype (-> +IO):
+  "<!DOCTYPE html>" say
+
+define html ((-> +IO) -> +IO):
+  "<html lang='en'>" print
+  call
+  "</html>" print
+
+define charset (List<Char> /* Text */ -> +IO):
+  "<meta charset='" <<>> "'>"
+
+define title (List<Char> /* Text */ -> +IO):
+  "title" text_block
+
+define favicon (List<Char> /* Text */ -> +IO):
+  "<link rel='icon' href='" <<>> "'>"
+
+define stylesheet (List<Char> /* Text */ -> +IO):
+  "<link rel='stylesheet' type='text/css' href='" <<>> "'>"
+
+define body ((-> +IO) -> +IO):
+  "body" block
+
+define p (List<Char> /* Text */ -> +IO):
+  "p" text_block
+
+define blockquote (List<Char> /* Text */ -> +IO):
+  "blockquote" text_block
+
+define google_analytics (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> token, domain;
+  do (concat "script" text_block) [
+    "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){",
+    "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),",
+    "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)",
+    "})(window,document,'script','//www.google-analytics.com/analytics.js','ga');",
+    "ga('create','", token, "','", domain, "');",
+    "ga('require','displayfeatures');",
+    "ga('send','pageview');",
+  ]
+
+define <<>> (List<Char> /* Text */, List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> contents, begin, end;
+  [begin, contents, end] print_each
+
+define unordered_list ((-> +IO), List<Pair<List<Char>, List<Char>>> /* Attrs */ -> +IO):
+  "ul" attr_block
+
+define definition_list ((-> +IO) -> +IO):
+  "dl" block
+
+define definition_item (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> term, definition;
+  term "dt" text_block
+  definition "dd" text_block
+
+define anchor (List<Char> /* Text */, List<Pair<List<Char>, List<Char>>> /* Attrs */ -> +IO):
+  "a" attr_text_block
+
+define item ((-> +IO) -> +IO):
+  "li" block
+
+define anchor_item (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> contents, href;
+  do (item):
+    contents [("href" => href)] anchor
+
+define top_navigation (-> +IO):
+  do ("header" block):
+    do ("body-width" class_div):
+      "Kitten"
+      do (anchor) [
+        ("class" => "title left"),
+        ("href"  => "/"),
+      ]
+      do ([("class" => "right")] anchor_list) [
+        ("Introduction" => "/intro/"),
+        ("FAQ"          => "/faq/"),
+        ("Source Code"  => "https://github.com/evincarofautumn/kitten/"),
+      ]
+
+define class_div ((-> +IO), List<Char> /* Text */ -> +IO):
+  -> class;
+  [("class" => class)] "div" attr_block
+
+define nav_title (List<Char> /* Text */ -> +IO):
+  [("class" => "title")] "h1" attr_text_block
+
+define h1 (List<Char> /* Text */ -> +IO):
+  "h1" text_block
+
+define h2 (List<Char> /* Text */ -> +IO):
+  "h2" text_block
+
+define anchor_list (List<Pair<List<Char>, List<Char>>> /* Attrs */, List<Pair<List<Char>, List<Char>>> /* Attrs */ -> +IO):
+  -> links, attrs;
+  do (attrs unordered_list):
+    links do (each):
+      unpair anchor_item
+
+define clear (-> +IO):
+  {} "clear" class_div
+
+define example (List<Char> /* Text */ -> +IO):
+  -> contents;
+  do ("pre" block):
+    contents "code" text_block

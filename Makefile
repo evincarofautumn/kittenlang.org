@@ -14,7 +14,7 @@ deploy :
 
 define HTML_KTN_RULE
 $1/index.html : $1/index.ktn
-	$(KITTEN) "$$<" > "$$@"
+	$(KITTEN) Kittenlang.ktn "$$<" > "$$@"
 endef
 
 define DEP_CORE_RULE

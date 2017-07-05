@@ -1,6 +1,4 @@
-import Kittenlang
-
-{
+do (page_template) {
 
 "Tutorial" h1
 
@@ -12,19 +10,19 @@ import Kittenlang
 
 "<strong>Kitten</strong> is a statically typed stack-based functional programming language designed to be simple and fast. (That’s what the website says.) A <em>functional</em> language is one that speaks <em>declaratively</em> about the solution to a problem, with an emphasis on, you guessed it, functions. Three important properties of functional languages are:" p
 
-  { "Evaluation"
-    "Programs operate by the <em>evaluation</em> of expressions, rather than the <em>execution</em> of orders."
-    definitionItem
+do (definition_list):
 
-"Immutability"
-    "Values, once created, don’t change."
-    definitionItem
+  "Evaluation"
+  "Programs operate by the <em>evaluation</em> of expressions, rather than the <em>execution</em> of orders."
+  definition_item
 
-    "Purity"
-    "If a function is called multiple times with the same parameters, it must produce the same result, just like in math."
-    definitionItem
+  "Immutability"
+  "Values, once created, don’t change."
+  definition_item
 
-  } definitionList
+  "Purity"
+  "If a function is called multiple times with the same parameters, it must produce the same result, just like in math."
+  definition_item
 
 "A <em>stack-based</em> language is one where most operations are done on a <em>stack</em> of values. Functions take their inputs from the stack, do some computation, and return their results on the same stack. An important feature of stack-based languages is their notation for writing expressions. You’re probably accustomed to seeing math expressions like this:" p
 
@@ -48,91 +46,115 @@ import Kittenlang
 
 "For the sake of familiarity, and to improve the ability to share code with other languages, Kitten uses infix for operators and postfix for function calls. However, you can use operators in the core postfix form if you choose, and we will see later how this can be very useful for manipulating code." p
 
-"(2 + 3) * (42 - 12)
+"""
+(2 + 3) * (42 - 12)
 
-2 3 (+) 42 12 (-) (*)" example
+2 3 (+) 42 12 (-) (*)
+""" example
 
 "Hold up!" h2
 
 "I mentioned earlier that Kitten is <em>both</em> functional <em>and</em> stack-based. These two seemingly opposing features are reconciled by a simple notion: <em>effects</em>. The only side effect of the <code>+</code> operator is to pop two values from the stack and push their sum, and it always produces the same output given the same inputs—it is a pure function from one stack state to another." p
 
-"So in fact, we can reason about these imperative stack procedures as pure mathematical functions, just like in a functional programming language. This combination of imperative style and functional reasoning is called <a href='https://en.wikipedia.org/wiki/Concatenative_programming'>concatenative programming</a>, and is a powerful way of thinking about programs." p
+"So in fact, we can <em>reason</em> about these imperative stack procedures as pure mathematical functions, just like in a functional programming language, but since there’s only ever one stack “live” at a given time, we can update it in-place for efficiency. This combination of imperative style and functional reasoning is called <a href='https://en.wikipedia.org/wiki/Concatenative_programming'>concatenative programming</a>, and it’s a powerful way of thinking about programs." p
 
 "Enough jibber jabber! Let’s write some code!" h2
 
 "Okay! First you need to download and install Kitten for your platform." p
 
-"Note: you cannot actually download and install Kitten yet. Follow the README instructions on how to build Kitten for your platform." blockquote
+"Note: you cannot actually download and install Kitten yet. (I’m aware that this whomps.) Follow the README instructions on how to build Kitten for your platform." blockquote
 
 "Open up your terminal and type <tt>kitten</tt>. Kitten will respond with a welcome message and a prompt:" p
 
-"Welcome to Kitten!
+"""
+Welcome to Kitten!
 Type ':help' for help or ':quit' to quit.
-&gt;&gt;&gt; " example
+&gt;&gt;&gt;
+""" example
 
 "Here is where you can type code and see its results. Let’s have Kitten say something." p
 
-"&gt;&gt;&gt; <kbd>\"meow\" say</kbd>
-meow" example
+"""
+&gt;&gt;&gt; <kbd>\"meow\" say</kbd>
+meow
+""" example
 
 "Adorable! What happens when we enter a number?" p
 
-"&gt;&gt;&gt; <kbd>1</kbd>
-1" example
+"""
+&gt;&gt;&gt; <kbd>1</kbd>
+1
+""" example
 
 "So the result of evaluating the expression <code>1</code> is just the value <code>1</code>. What happens when we enter another number?" p
 
-"&gt;&gt;&gt; <kbd>2</kbd>
+"""
+&gt;&gt;&gt; <kbd>2</kbd>
 1
-2" example
+2
+""" example
 
 "Interesting. Kitten remembered the last value we entered on the stack, and is displaying the whole stack between prompts, in the same order we entered it. Let’s add these numbers together." p
 
-"&gt;&gt;&gt; <kbd>(+)</kbd>
-3" example
+"""
+&gt;&gt;&gt; <kbd>(+)</kbd>
+3
+""" example
 
 "The <code>(+)</code> function took the two integers we had placed on the stack, added them, and pushed the result. We could also have used <code>+</code> as an infix operator, of course, and this is what we’ll do much of the time, but it’s important to understand that the stack is available." p
 
-"&gt;&gt;&gt; <kbd>1 + 2</kbd>
-3" example
+"""
+&gt;&gt;&gt; <kbd>1 + 2</kbd>
+3
+""" example
 
 "We can also enter multiple values at once…" p
 
-"&gt;&gt;&gt; <kbd>4 5</kbd>
+"""
+&gt;&gt;&gt; <kbd>4 5</kbd>
 3
 4
-5" example
+5
+""" example
 
 "…and perform multiple operations at once." p
 
-"&gt;&gt;&gt; <kbd>(+) (*)</kbd>  // add 4 and 5, then multiply by 3
-27" example
+"""
+&gt;&gt;&gt; <kbd>(+) (*)</kbd>  // add 4 and 5, then multiply by 3
+27
+""" example
 
 "The <code>drop</code> function lets us drop a single value from the stack. In interactive mode, you can also use the <code><kbd>:clear</kbd></code> command to clear the stack entirely." p
 
 "Vectors and Functions" h2
 
-"Kitten has a built-in vector datatype. Vector literals are surrounded by square brackets <code>[]</code> and have comma-separated elements." p
+"Kitten has a built-in list datatype. List literals are surrounded by square brackets <code>[]</code> and have comma-separated elements." p
 
-"&gt;&gt;&gt; <kbd>[1, 2, 3]</kbd>
-[1,2,3]" example
+"""
+&gt;&gt;&gt; <kbd>[1, 2, 3]</kbd>
+[1,2,3]
+""" example
 
 "We can duplicate a value with the <code>dup</code> function." p
 
-"&gt;&gt;&gt; <kbd>dup</kbd>
+"""
+&gt;&gt;&gt; <kbd>dup</kbd>
 [1,2,3]
-[1,2,3]" example
+[1,2,3]
+""" example
 
-"The <code>map</code> function lets us apply a function to each element of a vector, returning a vector of the results. We can create a function by simply surrounding some code with curly braces <code>{}</code>." p
+"The <code>map</code> function lets us apply a function to each element of a list, returning a list of the results. We can create a function by simply surrounding some code with curly braces <code>{}</code>." p
 
-"&gt;&gt;&gt; <kbd>{2 (*)}</kbd>  // multiply by two
+"""
+&gt;&gt;&gt; <kbd>{2 (*)}</kbd>  // multiply by two
 [1,2,3]
 [1,2,3]
 &lt;function&gt;
 
 &gt;&gt;&gt; <kbd>map</kbd>
 [1,2,3]
-[2,4,6]" example
+[2,4,6]
+""" example
 
 "<code>{2 (*)}</code> is a function which takes an integer on the stack and multiplies it by 2. You can think of it as the <code>*</code> operator, with <code>2</code> pre-bound as the second argument. We can give this function a name using <code>define</code>, so we don’t have to repeat its implementation if we want to use it again." p
 
@@ -140,7 +162,9 @@ meow" example
 
 "Here we see a <em>type signature</em>." p
 
-} pageTemplate
+"(This tutorial is sadly incomplete; in the meantime, check out the <a href='/intro/'>intro</a>.)" blockquote
+
+}
 
 
 /*
