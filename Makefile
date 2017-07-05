@@ -10,7 +10,7 @@ clean :
 	find . -name '*.html' -exec rm {} +
 
 deploy :
-	@ ./deploy.sh $(TARGETS)
+	@ ./deploy.sh $(TARGETS) + style.css
 
 define HTML_KTN_RULE
 $1/index.html : $1/index.ktn
