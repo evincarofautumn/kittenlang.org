@@ -176,6 +176,9 @@ define h1 (List<Char> /* Text */ -> +IO):
 define h2 (List<Char> /* Text */ -> +IO):
   "h2" text_block
 
+define h3 (List<Char> /* Text */ -> +IO):
+  "h3" text_block
+
 define anchor_list (List<Pair<List<Char>, List<Char>>> /* Attrs */, List<Pair<List<Char>, List<Char>>> /* Attrs */ -> +IO):
   -> links, attrs;
   do (attrs unordered_list):

@@ -58,7 +58,8 @@ footer {
 /* Headings */
 
 h1,
-h2 {
+h2,
+h3 {
 	font-weight: normal;
 	margin-bottom: 1em;
 }
@@ -69,6 +70,11 @@ h1 {
 
 h2 {
 	font-size: large;
+}
+
+h3 {
+	font-size: medium;
+    font-weight: bold;
 }
 
 .content h1,
@@ -215,30 +221,7 @@ pre .nocode {
 	color: #000;
 }
 
-pre .str { color: #08c }
-pre .kwd { color: #008 }
-pre .com { color: #888 }
-pre .typ { color: #b6d }
-pre .lit { color: #08c }
-pre .pun { color: #000 }
-pre .pln { color: #000 }
-pre .dec { color: #08c }
-
-.gist-it-gist {
-	margin-bottom: 2em;
-}
-
-.gist-it-gist .gist-file {
-	border: none !important;
-}
-
-.gist-it-gist .gist-file .gist-data {
-	background: none !important;
-	border: none !important;
-	margin: 32px;
-}
-
-.gist-it-gist .gist-file .gist-meta {
-	background: #f0f0f0 !important;
-	border: 1px solid #e0e0e0 !important;
-}
+.kitten.keyword { color: #008; font-weight: bold }
+.kitten.type    { color: #b6d }
+.kitten.literal { color: #08c }
+.kitten.comment { color: #888 }

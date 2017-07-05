@@ -4,7 +4,33 @@ do (page_template) {
 
 "<strong>Kitten</strong> is a statically typed, stack-based functional programming language designed to be simple and fast. It is a <em>concatenative</em> language, combining aspects of imperative and pure functional programming. There is <a href='/intro/'>an introduction</a> available and a <a href='/tutorial/'>tutorial</a> in progress." p
 
-"Example" h2
+"Examples" h2
+
+"Hello world" h3
+
+// TODO: Do syntax highlighting automatically.
+
+"""
+<span class='kitten literal'>"meow"</span> say  <span class='kitten comment'>// Kittens don't speak English.</span>
+""" example
+
+"Hello user" h3
+
+"""
+<span class='kitten keyword'>define</span> greet (<span class='kitten type'>List</span>&lt;<span class='kitten type'>Char</span>&gt; -&gt; +<span class='kitten type'>IO</span>):
+  -> name;
+  [<span class='kitten literal'>"Hello, "</span>, name, <span class='kitten literal'>"!"</span>] concat say
+
+"What is your name? " ask
+greet
+""" example
+
+"Larger examples" h3
+
+do ([] anchor_list) [
+  ("99 Bottles of Beer" => "https://github.com/evincarofautumn/kitten/blob/5b01e2b52246cbcf927c9e98581afbae6672b8a3/examples/beer.ktn"),
+  ("Tic Tac Toe"        => "https://github.com/evincarofautumn/kitten/blob/5b01e2b52246cbcf927c9e98581afbae6672b8a3/examples/tictactoe.ktn"),
+]
 
 "<script src='http://gist-it.appspot.com/github/evincarofautumn/kitten/blob/master/test/levenshtein.ktn'></script>" print
 
