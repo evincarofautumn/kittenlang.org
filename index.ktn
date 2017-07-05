@@ -21,7 +21,7 @@ do (page_template) {
   -> name;
   [<span class='kitten literal'>"Hello, "</span>, name, <span class='kitten literal'>"!"</span>] concat say
 
-"What is your name? " ask
+<span class='kitten literal'>"What is your name? "</span> ask
 greet
 """ example
 
