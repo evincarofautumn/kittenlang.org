@@ -32,8 +32,6 @@ do ([] anchor_list) [
   ("Tic Tac Toe"        => "https://github.com/evincarofautumn/kitten/blob/5b01e2b52246cbcf927c9e98581afbae6672b8a3/examples/tictactoe.ktn"),
 ]
 
-"<script src='http://gist-it.appspot.com/github/evincarofautumn/kitten/blob/master/test/levenshtein.ktn'></script>" print
-
 "The <a href='https://github.com/evincarofautumn/kitten'>source code</a> is hosted on GitHub, and you can join <a href='irc://freenode.net/#concatenative'>#concatenative on Freenode</a> to keep up with the latest developments." p
 
 }
