@@ -68,8 +68,11 @@ literals use single quotes (<code>''</code>).
 """ p
 
 """
-""         // []
-"Meow!\\n"  // ['M', 'e', 'o', 'w', '!', '\\n']
+// []
+""
+
+// ['M', 'e', 'o', 'w', '!', '\\n']
+"Meow!\\n"
 """ example
 
 """
@@ -87,12 +90,12 @@ It contains multiple lines.
 (Haiku optional.)
 \"\"\"
 
-    \"\"\"
-    1 2 3 4 5
-    6 7 8 9 10
+  \"\"\"
+  1 2 3 4 5
+  6 7 8 9 10
 
-    11 12
-    \"\"\"
+  11 12
+  \"\"\"
 
 // Equivalent to:
 
@@ -112,7 +115,6 @@ the last element.
 
 """
 // &lt;T&gt; List&lt;T&gt;
-// (An empty list may be used where a list of any type is expected.)
 []
 
 // List&lt;Int32&gt;
@@ -126,6 +128,11 @@ the last element.
 ]
 """ example
 
+"""
+Note the type of <code>[]</code>, <code>&lt;T&gt; List&lt;T&gt;</code>: an empty
+list may be used where a list of any type is expected.
+""" p
+
 "Expressions and Stack-based Evaluation" h2
 
 """
@@ -136,7 +143,8 @@ built into the language—they are ordinary functions with symbolic names.
 """ p
 
 """
-2 * 2 + 3 * 3  // (2 * 2) + (3 * 3)
+// (2 * 2) + (3 * 3)
+2 * 2 + 3 * 3
 """ example
 
 """
@@ -151,7 +159,8 @@ chaining multiple functions together in a “pipeline”.
 """
 "Meow!\\n" print
 
--3 abs neg show reverse say  // Prints "3-" followed by a newline.
+// Prints "3-" followed by a newline.
+-3 abs neg show reverse say
 """ example
 
 """
@@ -164,8 +173,11 @@ shorthand for <code>-&gt; x; x / 3</code>; likewise, <code>(1 -)</code>
 """
 2 2 (*) 3 3 (*) (+)
 
-x (* 2)  // (x * 2)
-x (2 -)  // (2 - x)
+// (x * 2)
+x (* 2)
+
+// (2 - x)
+x (2 -)
 """ example
 
 """
@@ -212,7 +224,8 @@ has the effect of pushing its value to the stack.
 """ p
 
 """
-5 -&gt; x; x * x  // 25
+// 25
+5 -&gt; x; x * x
 """ example
 
 """
@@ -273,9 +286,14 @@ the stack. For example, here’s how the standard <code>not</code> word is defin
 """ p
 
 """
--> x; if (x) { false } else { true }  // Start with a local variable...
--> x; x if { false } else { true }    // ...take it from the stack...
-if { false } else { true }            // ...and remove the redundancy.
+// Start with a local variable…
+-> x; if (x) { false } else { true }
+
+// …take it from the stack…
+-> x; x if { false } else { true }
+
+// …and remove the redundancy.
+if { false } else { true }
 """ example
 
 """
@@ -285,8 +303,8 @@ An <code>if</code> without an <code>else</code> is equivalent to an
 """ p
 
 """
-if (have_food) { purr } else {}
 if (have_food) { purr }
+if (have_food) { purr } else {}
 """ example
 
 "Algebraic Data Types" h2
@@ -300,28 +318,39 @@ any number of fields, with the field types given in parentheses.
 
 """
 // Enumeration
+// Multiple constructors with no fields
 type Bool:
-  case false        // Multiple constructors with no fields
+  case false
   case true
 
 // Enumeration
+// Explicitly indicating no fields
 type Bool:
-  case false ()     // Explicitly indicating no fields
+  case false ()
   case true ()
 
 // Structure
+// One constructor with multiple fields
 type Pair&lt;A, B&gt;:
-  case pair (A, B)  // One constructor with multiple fields
+  case pair (A, B)
 
-2.0 'x' pair        // A pair of type Pair&lt;Float64, Char&gt;
+// A pair of type Pair&lt;Float64, Char&gt;
+2.0 'x' pair
 
 // Tagged Union
+// Multiple constructors
+// with different numbers of fields
 type Optional&lt;T&gt;:
-  case none         // Multiple constructors
-  case some (T)     // with different numbers of fields
+  case none
+  case some (T)
 
-none                // An empty Optional, of type &lt;T&gt; Optional&lt;T&gt;
-5 some              // A full Optional, of type Optional&lt;Int32&gt;
+// An empty Optional
+// of type &lt;T&gt; Optional&lt;T&gt;
+none
+
+// A full Optional
+// of type Optional&lt;Int32&gt;
+5 some
 """ example
 
 """
@@ -336,15 +365,13 @@ the expression <code>-&gt; p; match (p) case pair {}</code> has the type
 // TODO: link functions (e.g. "head") to their docs.
 
 """
-// Given "head" has the type List&lt;T&gt; -&gt; Optional&lt;T&gt;,
-// if xs is a List&lt;Int32&gt;:
 match (xs head):
   case some:
     -&gt; x;
-    "The list non-empty and its first value is: " print
+    "Non-empty list; first value: " print
     x say
   case none:
-    "The list was empty." say
+    "Empty list." say
 """ example
 
 """
@@ -356,10 +383,16 @@ stack. That is, <code>match (x) case /* ... */</code> is equivalent to
 """ p
 
 """
-// Construct a pair, deconstruct it, swap its elements, and make a new pair.
+This code constructs a pair, deconstructs it, swaps its elements, and makes a
+new swapped pair.
+""" p
 
-1 2 pair                       // (1, 2)
-match case pair { swap pair }  // (2, 1)
+"""
+// (1, 2)
+1 2 pair
+
+// (2, 1)
+match case pair { swap pair }
 """ example
 
 """
@@ -384,7 +417,10 @@ equivalent <code>→</code> (U+2192).
 """ p
 
 """
-// Square a number by copying it and multiplying it with itself.
+This definition squares a number by copying it and multiplying it with itself.
+""" p
+
+"""
 define square (Int32 -&gt; Int32):
   dup (*)
 """ example
@@ -395,18 +431,24 @@ its name.
 """ p
 
 """
-4 square  // 16
+// 16
+4 square
 """ example
 
 """
 To push a function to the stack instead of calling it, wrap it in a block. This
-denotes an anonymous function, called a <em>quotation</em>.
+denotes an anonymous function, called a <em>quotation</em>. Quotations are often
+used with <em>higher-order functions</em> which take other functions as
+arguments, such as <code>map</code>, <code>filter</code>,
+<code>fold_left</code>, and <code>zip_with</code>.
 """ p
 
 """
-[1, 2, 3] { square } map  // [1, 4, 9]
+// [1, 4, 9]
+[1, 2, 3] { square } map
 
-[1, 2, 3] { (* 10) } map  // [10, 20, 30]
+// [10, 20, 30]
+[1, 2, 3] { (* 10) } map
 """ example
 
 """
@@ -418,9 +460,14 @@ partially applied operators.
 """ p
 
 """
-[1, 2, 3] \\square map            // [1, 4, 9]
-[1, 2, 3] \\(+ 1) map             // [2, 3, 4]
-[1, 2, 3] [4, 5, 6] \\* zip_with  // [4, 10, 18]
+// [1, 4, 9]
+[1, 2, 3] \\square map
+
+// [2, 3, 4]
+[1, 2, 3] \\(+ 1) map
+
+// [4, 10, 18]
+[1, 2, 3] [4, 5, 6] \\* zip_with
 """ example
 
 "Lambdas" h2
@@ -452,14 +499,14 @@ which is compatible with the usual layout syntax for blocks:
 """
 match (xs head)
 case some -&gt; x {
-  x sayInt
+  x say
 } else {
   "nothing" say
 }
 
 match (xs head)
 case some -&gt; x:
-  x sayInt
+  x say
 else:
   "nothing" say
 """ example
@@ -471,7 +518,8 @@ definitions.
 """ p
 
 """
-define square (Int32 -&gt; Int32)
+define square
+(Int32 -&gt; Int32)
 -&gt; x:
   x * x
 """ example
@@ -484,7 +532,8 @@ signature, their types are separated by commas.
 """ p
 
 """
-define multiply3 (Float64, Float64, Float64 -&gt; Float64):
+define multiply3
+(Float64, Float64, Float64 -&gt; Float64):
   -&gt; x, y, z;
   x * y * z
 """ example
@@ -494,7 +543,8 @@ Notice what happens when we write this function in postfix:
 """ p
 
 """
-define multiply3 (Float64, Float64, Float64 -&gt; Float64):
+define multiply3
+(Float64, Float64, Float64 -&gt; Float64):
   -&gt; x, y, z;
   x y z (*) (*)
 """ example
@@ -508,7 +558,8 @@ arguments and return values implicitly on the stack.
 """ p
 
 """
-define multiply3 (Float64, Float64, Float64 -&gt; Float64):
+define multiply3
+(Float64, Float64, Float64 -&gt; Float64):
   (*) (*)
 """ example
 
@@ -518,15 +569,20 @@ Unlike most languages, Kitten also allows functions to have multiple
 """ p
 
 """
-define increment_both (Int32, Int32 -&gt; Int32, Int32):
+define increment_both
+(Int32, Int32 -&gt; Int32, Int32):
   -&gt; x, y;
   (x + 1) (y + 1)
 
-// "to_both" takes one function and two values
-// and applies the function to both of the values.
-define increment_both (Int32, Int32 -&gt; Int32, Int32):
+define increment_both
+(Int32, Int32 -&gt; Int32, Int32):
   \\(+ 1) to_both
 """ example
+
+"""
+<code>to_both</code> is a handy combinator: it takes one function and two
+values, and applies the function to both of the values.
+""" p
 
 "Polymorphism" h2
 
@@ -537,13 +593,11 @@ list:
 """ p
 
 """
-define reverse&lt;T&gt; (List&lt;T&gt; -&gt; List&lt;T&gt;):
+define reverse&lt;T&gt;
+(List&lt;T&gt; -&gt; List&lt;T&gt;):
   -&gt; xs;
-
-  // head_tail: List&lt;T&gt; -&gt; Optional&lt;Pair&lt;T, List&lt;T&gt;&gt;&gt;
   match (xs head_tail)
   case some:
-    // unpair: Pair&lt;A, B&gt; -&gt; A, B
     unpair -&gt; h, t;
     t reverse h append
   case none:
@@ -555,11 +609,19 @@ The signature reads:
 """ p
 
 """
-&lt;T&gt;  // For any type 'T'…
+// For any type 'T'…
+&lt;T&gt;
 (
-  List&lt;T&gt;  // …given a list of values of that type…
-  -&gt;       // …this function produces…
-  List&lt;T&gt;  // …another list of values of that type.
+
+  // …given a list of values of that type…
+  List&lt;T&gt;
+
+  // …this function produces…
+  -&gt;
+
+  // …another list of values of that type.
+  List&lt;T&gt;
+
 )
 """ example
 
@@ -573,8 +635,13 @@ It takes a list of <code>A</code> values, and a function from <code>A</code> to
 """ p
 
 """
-[3, 6, 9, 12] \\show map      // ["3", "6", "9", "12"]
-[3, 6, 9, 12] { (/ 3) } map  // [1, 2, 3, 4]
+// Same type (Int32 -&gt; Int32)
+// [1, 2, 3, 4]
+[3, 6, 9, 12] { (/ 3) } map
+
+// Different types (Int32 -&gt; List&lt;Char&gt;)
+// ["3", "6", "9", "12"]
+[3, 6, 9, 12] \\show map
 """ example
 
 "Permissions" h2
@@ -589,7 +656,9 @@ I/O, and this is reflected in their types.
 """ p
 
 """
-// Takes no inputs, produces no outputs, has permission to do I/O.
+// Takes no inputs,
+// produces no outputs,
+// and has permission to do I/O.
 define newline (-> +IO):
   "\\n" print
 """ example

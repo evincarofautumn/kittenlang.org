@@ -16,7 +16,7 @@ do (page_template) {
 
 "Is it compiled or interpreted?" h2
 
-"There is an interpreter written in Haskell, and a compiler to C99. This enables you to try code interactively in the interpreter, then compile it to run efficiently." p
+"There is an interpreter written in Haskell, and a work-in-progress native code compiler. This enables you to try code interactively in the interpreter, then compile it to run efficiently." p
 
 "Is it stable?" h2
 
