@@ -4,6 +4,25 @@ do (page_template) {
 
 "<strong>Kitten</strong> is a statically typed, stack-based functional programming language designed to be simple and fast. It is a <em>concatenative</em> language, combining aspects of imperative and pure functional programming. There is <a href='/intro/'>an introduction</a> available and a <a href='/tutorial/'>tutorial</a> in progress." p
 
+"Features" h2
+
+do (definition_list):
+  "Concatenative Programming"
+  "A compositional style of programming to make refactoring easier and improve code reuse."
+  definition_item
+
+  "Static Types"
+  "Type inference based on Hindley–Milner to help improve correctness and performance."
+  definition_item
+
+  "Permissions"
+  "A system of effect types to control where side-effects are allowed."
+  definition_item
+
+  "Deterministic Resource Management"
+  "Automatic management of memory and resources with no garbage collector."
+  definition_item
+
 "Examples" h2
 
 "Hello world" h3
