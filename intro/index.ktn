@@ -14,65 +14,69 @@ use Kitten in the form of a <a href='/tutorial/'>tutorial</a>.
 "Comments are C-style. Multi-line comments are allowed to nest." p
 
 """
-// Single-line comment.
+<span class='kitten comment'>// Single-line comment.</span>
 
-/*
+<span class='kitten comment'>/*
   Multi-line
   comment.
-*/
+*/</span>
 
-/*
+<span class='kitten comment'>/*
   Nested
 
   /* multi-line */
 
   comment.
-*/
+*/</span>
 """ example
 
 "Literals" h2
 
 """
 Integers consist of decimal digits, or a base prefix and digits in the
-corresponding base. They have type <code>Int32</code> by default; this can be
+corresponding base. They have type
+<code><span class='kitten type'>Int32</span></code> by default; this can be
 overridden with a suffix.
 """ p
 
 """
-6       // Decimal
-0b1010  // Binary
-0o755   // Octal
-0x10    // Hexadecimal
-5i64    // Decimal Int64
-0xFFu8  // Hexadecimal UInt8
+<span class='kitten literal'>6</span>       // Decimal
+<span class='kitten literal'>0b1010</span>  // Binary
+<span class='kitten literal'>0o755</span>   // Octal
+<span class='kitten literal'>0x10</span>    // Hexadecimal
+<span class='kitten literal'>5i64</span>    // Decimal Int64
+<span class='kitten literal'>0xFFu8</span>  // Hexadecimal UInt8
 """ example
 
 """
 Floating-point numbers consist of decimal digits, a decimal point
 (<code>.</code>), a fractional part, and an optional exponent. They have type
-<code>Float64</code> by default, and this can also be overridden with a suffix.
+<code><span class='kitten type'>Float64</span></code> by default, and this can
+also be overridden with a suffix.
 """ p
 
 """
-6.28    // Regular notation
-.5      // Leading digit omitted
-1.0e+9  // Scientific notation
-2.0f32  // Float32
+<span class='kitten literal'>6.28</span>    // Regular notation
+<span class='kitten literal'>.5</span>      // Leading digit omitted
+<span class='kitten literal'>1.0e+9</span>  // Scientific notation
+<span class='kitten literal'>2.0f32</span>  // Float32
 """ example
 
 """
-Text literals use double-quotes (<code>""</code>), and are syntactic sugar for
-lists of characters. They have type <code>List&lt;Char&gt;</code>. Common
-character escapes are allowed using a backslash <code>\\</code>. Character
-literals use single quotes (<code>''</code>).
+Text literals use double-quotes
+(<code><span class='kitten literal'>""</span></code>), and are syntactic sugar
+for lists of characters. They have type
+<code><span class='kitten type'>List</span>&lt;<span class='kitten type'>Char</span>&gt;</code>.
+Common character escapes are allowed using a backslash <code>\\</code>. Character
+literals use single quotes (<code><span class='kitten literal'>''</span></code>).
 """ p
 
 """
-// []
-""
+<span class='kitten comment'>// []</span>
+<span class='kitten literal'>""</span>
 
-// ['M', 'e', 'o', 'w', '!', '\\n']
-"Meow!\\n"
+<span class='kitten comment'>// ['M', 'e', 'o', 'w', '!', '\\n']</span>
+<span class='kitten literal'>"Meow!\\n"</span>
 """ example
 
 """
@@ -84,53 +88,55 @@ line.
 
 """
 
-\"\"\"
+<span class='kitten literal'>\"\"\"
 Here’s a paragraph.
 It contains multiple lines.
 (Haiku optional.)
-\"\"\"
+\"\"\"</span>
 
-  \"\"\"
+  <span class='kitten literal'>\"\"\"
   1 2 3 4 5
   6 7 8 9 10
 
   11 12
-  \"\"\"
+  \"\"\"</span>
 
-// Equivalent to:
+<span class='kitten comment'>// Equivalent to:</span>
 
-"Here’s a paragraph.\\nIt contains multiple lines.\\n(Haiku optional.)"
+<span class='kitten literal'>"Here’s a paragraph.\\nIt contains multiple lines.\\n(Haiku optional.)"</span>
 
-"1 2 3 4 5\\n6 7 8 9 10\\n\\n11 12"
+<span class='kitten literal'>"1 2 3 4 5\\n6 7 8 9 10\\n\\n11 12"</span>
 """ example
 
 "Lists" h2
 
 """
 Lists are surrounded by square brackets (<code>[]</code>) with comma-separated
-elements of the same type. They have type <code>List&lt;T&gt;</code> where
-<code>T</code> is the type of the elements. A trailing comma is allowed after
-the last element.
+elements of the same type. They have type
+<code><span class='kitten type'>List</span>&lt;<span class='kitten type'>T</span>&gt;</code>
+where <code><span class='kitten type'>T</span></code> is the type of the
+elements. A trailing comma is allowed after the last element.
 """ p
 
 """
-// &lt;T&gt; List&lt;T&gt;
+<span class='kitten comment'>// &lt;T&gt; List&lt;T&gt;</span>
 []
 
-// List&lt;Int32&gt;
-[1, 2, 3]
+<span class='kitten comment'>// List&lt;Int32&gt;</span>
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>]
 
-// List&lt;List&lt;Char&gt;&gt;
+<span class='kitten comment'>// List&lt;List&lt;Char&gt;&gt;</span>
 [
-  "four",
-  "five",
-  "six",
+  <span class='kitten literal'>"four"</span>,
+  <span class='kitten literal'>"five"</span>,
+  <span class='kitten literal'>"six"</span>,
 ]
 """ example
 
 """
-Note the type of <code>[]</code>, <code>&lt;T&gt; List&lt;T&gt;</code>: an empty
-list may be used where a list of any type is expected.
+Note that the type of <code>[]</code> is
+<code>&lt;<span class='kitten type'>T</span>&gt; <span class='kitten type'>List</span>&lt;<span class='kitten type'>T</span>&gt;</code>:
+an empty list may be used where a list of any type is expected.
 """ p
 
 "Expressions and Stack-based Evaluation" h2
@@ -143,8 +149,8 @@ built into the language—they are ordinary functions with symbolic names.
 """ p
 
 """
-// (2 * 2) + (3 * 3)
-2 * 2 + 3 * 3
+<span class='kitten comment'>// (2 * 2) + (3 * 3)</span>
+<span class='kitten literal'>2</span> * <span class='kitten literal'>2</span> + <span class='kitten literal'>3</span> * <span class='kitten literal'>3</span>
 """ example
 
 """
@@ -157,45 +163,51 @@ chaining multiple functions together in a “pipeline”.
 """ p
 
 """
-"Meow!\\n" print
+<span class='kitten literal'>"Meow!\\n"</span> print
 
-// Prints "3-" followed by a newline.
--3 abs neg show reverse say
+<span class='kitten comment'>// Prints "3-" followed by a newline.</span>
+<span class='kitten literal'>-3</span> abs neg show reverse say
 """ example
 
 """
 You can call an operator in postfix form by wrapping it in parentheses. You can
-also partially apply one operand: <code>(/ 3)</code> (“divide by three”) is
-shorthand for <code>-&gt; x; x / 3</code>; likewise, <code>(1 -)</code>
-(“one minus”) is short for <code>-&gt; x; 1 - x</code>.
+also partially apply one operand:
+<code>(/ <span class='kitten literal'>3</span>)</code> (“divide by three”) is
+shorthand for
+<code>-&gt; x; x / <span class='kitten literal'>3</span></code>; likewise,
+<code>(<span class='kitten literal'>1</span> -)</code>
+(“one minus”) is short for
+<code>-&gt; x; <span class='kitten literal'>1</span> - x</code>.
 """ p
 
 """
-2 2 (*) 3 3 (*) (+)
+<span class='kitten literal'>2</span> <span class='kitten literal'>2</span> (*) <span class='kitten literal'>3</span> <span class='kitten literal'>3</span> (*) (+)
 
-// (x * 2)
-x (* 2)
+<span class='kitten comment'>// (x * 2)</span>
+x (* <span class='kitten literal'>2</span>)
 
-// (2 - x)
-x (2 -)
+<span class='kitten comment'>// (2 - x)</span>
+x (<span class='kitten literal'>2</span> -)
 """ example
 
 """
 Here we start to see Kitten’s stack-based evaluation model. When computing
-<code>2 2 (*)</code>, we push <code>2</code> to the <em>data stack</em>, push
-another <code>2</code>, then call <code>*</code> to multiply them, leaving the
-result on the stack. So one way to read postfix code is as a sequence of
-imperative commands operating on the stack.
+<code><span class='kitten literal'>2</span> <span class='kitten literal'>2</span> (*)</code>,
+we push <code><span class='kitten literal'>2</span></code> to the
+<em>data stack</em>, push another
+<code><span class='kitten literal'>2</span></code>, then call <code>*</code> to
+multiply them, leaving the result on the stack. So one way to read postfix code
+is as a sequence of imperative commands operating on the stack.
 """ p
 
 """
-2    // push 2   => 2
-2    // push 2   => 2 2
-(*)  // multiply => 4
-3    // push 3   => 4 3
-3    // push 3   => 4 3 3
-(*)  // multiply => 4 9
-(+)  // add      => 13
+<span class='kitten literal'>2</span>    <span class='kitten comment'>// push 2   => 2</span>
+<span class='kitten literal'>2</span>    <span class='kitten comment'>// push 2   => 2 2</span>
+(*)  <span class='kitten comment'>// multiply => 4</span>
+<span class='kitten literal'>3</span>    <span class='kitten comment'>// push 3   => 4 3</span>
+<span class='kitten literal'>3</span>    <span class='kitten comment'>// push 3   => 4 3 3</span>
+(*)  <span class='kitten comment'>// multiply => 4 9</span>
+(+)  <span class='kitten comment'>// add      => 13</span>
 """ example
 
 """
@@ -224,8 +236,8 @@ has the effect of pushing its value to the stack.
 """ p
 
 """
-// 25
-5 -&gt; x; x * x
+<span class='kitten comment'>// 25</span>
+<span class='kitten literal'>5</span> -&gt; x; x * x
 """ example
 
 """
@@ -234,11 +246,11 @@ in the order they were pushed.
 """ p
 
 """
-1 2 3 -&gt; x, y, z;
+<span class='kitten literal'>1</span> <span class='kitten literal'>2</span> <span class='kitten literal'>3</span> -&gt; x, y, z;
 
-x say  // 1
-y say  // 2
-z say  // 3
+x say  <span class='kitten comment'>// 1</span>
+y say  <span class='kitten comment'>// 2</span>
+z say  <span class='kitten comment'>// 3</span>
 """ example
 
 """
@@ -251,28 +263,29 @@ multiple times <em>copies</em> its value, as long as the type is copyable.
 
 """
 Conditional execution uses the
-<code>if</code>…<code>elif</code>…<code>else</code> expression. Blocks can be
-surrounded by curly braces <code>{}</code> like in C, or prefixed with a colon
-<code>:</code> and delimited by indentation like in Python. The <code>:</code>
-form is called “layout” and desugars into the <code>{}</code> form.
+<code><span class='kitten keyword'>if</span></code>…<code><span class='kitten keyword'>elif</span></code>…<code><span class='kitten keyword'>else</span></code>
+expression. Blocks can be surrounded by curly braces <code>{}</code> like in C,
+or prefixed with a colon <code>:</code> and delimited by indentation like in
+Python. The <code>:</code> form is called “layout” and desugars into the
+<code>{}</code> form.
 """ p
 
 """
-if (food_dish is_empty) {
-  ":<" say
+<span class='kitten keyword'>if</span> (food_dish is_empty) {
+  <span class='kitten literal'>":<"</span> say
   beg_for_food
-} elif (mouse_nearby) {
+} <span class='kitten keyword'>elif</span> (mouse_nearby) {
   eat_mouse
-} else {
+} <span class='kitten keyword'>else</span> {
   purr
 }
 
-if (food_dish is_empty):
-  ":<" say
+<span class='kitten keyword'>if</span> (food_dish is_empty):
+  <span class='kitten literal'>":<"</span> say
   beg_for_food
-elif (mouse_nearby):
+<span class='kitten keyword'>elif</span> (mouse_nearby):
   eat_mouse
-else:
+<span class='kitten keyword'>else</span>:
   purr
 """ example
 
@@ -281,105 +294,113 @@ Layout syntax is generally preferred for multi-line blocks.
 """ p
 
 """
-You can omit the condition part of an <code>if</code> expression to take it from
+You can omit the condition part of an <code><span class='kitten keyword'>if</span></code> expression to take it from
 the stack. For example, here’s how the standard <code>not</code> word is defined.
 """ p
 
 """
 // Start with a local variable…
--> x; if (x) { false } else { true }
+-> x; <span class='kitten keyword'>if</span> (x) { false } <span class='kitten keyword'>else</span> { true }
 
 // …take it from the stack…
--> x; x if { false } else { true }
+-> x; x <span class='kitten keyword'>if</span> { false } <span class='kitten keyword'>else</span> { true }
 
 // …and remove the redundancy.
-if { false } else { true }
+<span class='kitten keyword'>if</span> { false } <span class='kitten keyword'>else</span> { true }
 """ example
 
 """
-An <code>if</code> without an <code>else</code> is equivalent to an
-<code>if</code> with an empty <code>else</code> block. In other words, the
-<code>else</code> branch is the identity function.
+An <code><span class='kitten keyword'>if</span></code> without an
+<code><span class='kitten keyword'>else</span></code> is equivalent to an
+<code><span class='kitten keyword'>if</span></code> with an empty
+<code><span class='kitten keyword'>else</span></code> block. In other words, the
+<code><span class='kitten keyword'>else</span></code> branch is the identity
+function.
 """ p
 
 """
-if (have_food) { purr }
-if (have_food) { purr } else {}
+<span class='kitten keyword'>if</span> (have_food) { purr }
+<span class='kitten keyword'>if</span> (have_food) { purr } <span class='kitten keyword'>else</span> {}
 """ example
 
 "Algebraic Data Types" h2
 
 """
 Kitten has <em>algebraic data types</em> (ADTs) defined with the
-<code>type</code> keyword. A type may have any number of <em>constructors</em>,
-introduced with the <code>case</code> keyword, and each constructor may have
+<code><span class='kitten keyword'>type</span></code> keyword. A type may have any number of <em>constructors</em>,
+introduced with the <code><span class='kitten keyword'>case</span></code> keyword, and each constructor may have
 any number of fields, with the field types given in parentheses.
 """ p
 
 """
-// Enumeration
-// Multiple constructors with no fields
-type Bool:
-  case false
-  case true
+<span class='kitten comment'>// Enumeration</span>
+<span class='kitten comment'>// Multiple constructors with no fields</span>
+<span class='kitten keyword'>type</span> <span class='kitten type'>Bool</span>:
+  <span class='kitten keyword'>case</span> false
+  <span class='kitten keyword'>case</span> true
 
-// Enumeration
-// Explicitly indicating no fields
-type Bool:
-  case false ()
-  case true ()
+<span class='kitten comment'>// Enumeration</span>
+<span class='kitten comment'>// Explicitly indicating no fields</span>
+<span class='kitten keyword'>type</span> <span class='kitten type'>Bool</span>:
+  <span class='kitten keyword'>case</span> false ()
+  <span class='kitten keyword'>case</span> true ()
 
-// Structure
-// One constructor with multiple fields
-type Pair&lt;A, B&gt;:
-  case pair (A, B)
+<span class='kitten comment'>// Structure</span>
+<span class='kitten comment'>// One constructor with multiple fields</span>
+<span class='kitten keyword'>type</span> <span class='kitten type'>Pair</span>&lt;<span class='kitten type'>A</span>, <span class='kitten type'>B</span>&gt;:
+  <span class='kitten keyword'>case</span> pair (<span class='kitten type'>A</span>, <span class='kitten type'>B</span>)
 
-// A pair of type Pair&lt;Float64, Char&gt;
-2.0 'x' pair
+<span class='kitten comment'>// A pair of type Pair&lt;Float64, Char&gt;</span>
+<span class='kitten literal'>2.0</span> <span class='kitten literal'>'x'</span> pair
 
-// Tagged Union
-// Multiple constructors
-// with different numbers of fields
-type Optional&lt;T&gt;:
-  case none
-  case some (T)
+<span class='kitten comment'>// Tagged Union</span>
+<span class='kitten comment'>// Multiple constructors</span>
+<span class='kitten comment'>// with different numbers of fields</span>
+<span class='kitten keyword'>type</span> <span class='kitten type'>Optional</span>&lt;<span class='kitten type'>T</span>&gt;:
+  <span class='kitten keyword'>case</span> none
+  <span class='kitten keyword'>case</span> some (<span class='kitten type'>T</span>)
 
-// An empty Optional
-// of type &lt;T&gt; Optional&lt;T&gt;
+<span class='kitten comment'>// An empty Optional</span>
+<span class='kitten comment'>// of type &lt;T&gt; Optional&lt;T&gt;</span>
 none
 
-// A full Optional
-// of type Optional&lt;Int32&gt;
-5 some
+<span class='kitten comment'>// A full Optional</span>
+<span class='kitten comment'>// of type Optional&lt;Int32&gt;</span>
+<span class='kitten literal'>5</span> some
 """ example
 
 """
-A <code>match</code> expression takes an instance of an ADT, matches on its tag,
-and unpacks its fields (if any) onto the stack so they can be manipulated. You
-can think of <code>match</code> as the <em>inverse</em> of a constructor:
-whereas <code>pair</code> has the type <code>A, B -&gt; Pair&lt;A, B&gt;</code>,
-the expression <code>-&gt; p; match (p) case pair {}</code> has the type
-<code>Pair&lt;A, B&gt; -&gt; A, B</code>—the inputs and outputs are swapped.
+A <code><span class='kitten keyword'>match</span></code> expression takes an
+instance of an ADT, matches on its tag, and unpacks its fields (if any) onto
+the stack so they can be manipulated. You can think of
+<code><span class='kitten keyword'>match</span></code> as the <em>inverse</em>
+of a constructor: whereas <code>pair</code> has the type
+<code><span class='kitten type'>A</span>, <span class='kitten type'>B</span> -&gt; <span class='kitten type'>Pair</span>&lt;<span class='kitten type'>A</span>, <span class='kitten type'>B</span>&gt;</code>, the expression
+<code>-&gt; p; <span class='kitten keyword'>match</span> (p) <span class='kitten keyword'>case</span> pair {}</code>
+has the type <code><span class='kitten type'>Pair</span>&lt;<span class='kitten type'>A</span>, <span class='kitten type'>B</span>&gt; -&gt; <span class='kitten type'>A</span>, <span class='kitten type'>B</span></code>—the inputs and outputs
+are swapped.
 """ p
 
 // TODO: link functions (e.g. "head") to their docs.
 
 """
-match (xs head):
-  case some:
+<span class='kitten keyword'>match</span> (xs head):
+  <span class='kitten keyword'>case</span> some:
     -&gt; x;
-    "Non-empty list; first value: " print
+    <span class='kitten literal'>"Non-empty list; first value: "</span> print
     x say
-  case none:
-    "Empty list." say
+  <span class='kitten keyword'>case</span> none:
+    <span class='kitten literal'>"Empty list."</span> say
 """ example
 
 """
-The value being pattern-matched (<code>x</code> in <code>match (x)</code>) is
-called the <em>scrutinee</em>. Similarly to <code>if</code>, you can omit this
-from a <code>match</code> expression, in which case the value is taken from the
-stack. That is, <code>match (x) case /* ... */</code> is equivalent to
-<code>x match case /* ... */</code>.
+The value being pattern-matched (<code>x</code> in <code><span class='kitten keyword'>match</span> (x)</code>) is
+called the <em>scrutinee</em>. Similarly to
+<code><span class='kitten keyword'>if</span></code>, you can omit this
+from a <code><span class='kitten keyword'>match</span></code> expression, in
+which case the value is taken from the stack. That is,
+<code><span class='kitten keyword'>match</span> (x) <span class='kitten keyword'>case</span> <span class='kitten comment'>/* ... */</span></code>
+is equivalent to <code>x <span class='kitten keyword'>match</span> <span class='kitten keyword'>case</span> <span class='kitten comment'>/* ... */</span></code>.
 """ p
 
 """
@@ -389,27 +410,33 @@ new swapped pair.
 
 """
 // (1, 2)
-1 2 pair
+<span class='kitten literal'>1</span> <span class='kitten literal'>2</span> pair
 
 // (2, 1)
-match case pair { swap pair }
+<span class='kitten keyword'>match</span> <span class='kitten keyword'>case</span> pair { swap pair }
 """ example
 
 """
-A <code>match</code> expression may include an <code>else</code> branch, which
-is executed if none of the cases matched. If a <code>match</code> expression is
-does not include a <code>case</code> for every constructor of a data type, and
-has no <code>else</code> branch, it’s called <em>non-exhaustive</em>. In that
-case, the compiler produces an implicit <code>else</code> branch, which calls
+A <code><span class='kitten keyword'>match</span></code> expression may include
+an <code><span class='kitten keyword'>else</span></code> branch, which
+is executed if none of the cases matched. If a
+<code><span class='kitten keyword'>match</span></code> expression
+does not include a <code><span class='kitten keyword'>case</span></code> for
+every constructor of a data type, and has no
+<code><span class='kitten keyword'>else</span></code> branch, it’s called
+<em>non-exhaustive</em>. In that case, the compiler produces an implicit
+<code><span class='kitten keyword'>else</span></code> branch, which calls
 <code>fail</code> to abort the program with an error message. This also causes
-the <code>match</code> expression to require the <code>+Fail</code> permission,
-which will be explained later on.
+the <code><span class='kitten keyword'>match</span></code> expression to require
+the <code>+<span class='kitten type'>Fail</span></code> permission, which will
+be explained later on.
 """ p
 
 "Function Definitions" h2
 
 """
-You can define new functions the <code>define</code> keyword. Every definition
+You can define new functions with the
+<code><span class='kitten keyword'>define</span></code> keyword. Every definition
 has a name, a type signature, and a body. Type signatures are written in
 parentheses, with the input and output types to the left and right,
 respectively, of an ASCII rightwards arrow <code>-&gt;</code> or its Unicode
@@ -421,7 +448,7 @@ This definition squares a number by copying it and multiplying it with itself.
 """ p
 
 """
-define square (Int32 -&gt; Int32):
+<span class='kitten keyword'>define</span> square (<span class='kitten type'>Int32</span> -&gt; <span class='kitten type'>Int32</span>):
   dup (*)
 """ example
 
@@ -431,8 +458,8 @@ its name.
 """ p
 
 """
-// 16
-4 square
+<span class='kitten comment'>// 16</span>
+<span class='kitten literal'>4</span> square
 """ example
 
 """
@@ -444,11 +471,11 @@ arguments, such as <code>map</code>, <code>filter</code>,
 """ p
 
 """
-// [1, 4, 9]
-[1, 2, 3] { square } map
+<span class='kitten comment'>// [1, 4, 9]</span>
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] { square } map
 
-// [10, 20, 30]
-[1, 2, 3] { (* 10) } map
+<span class='kitten comment'>// [10, 20, 30]</span>
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] { (* <span class='kitten literal'>10</span>) } map
 """ example
 
 """
@@ -460,14 +487,14 @@ partially applied operators.
 """ p
 
 """
-// [1, 4, 9]
-[1, 2, 3] \\square map
+<span class='kitten comment'>// [1, 4, 9]</span>
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] \\square map
 
-// [2, 3, 4]
-[1, 2, 3] \\(+ 1) map
+<span class='kitten comment'>// [2, 3, 4]</span>
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] \\(+ <span class='kitten literal'>1</span>) map
 
-// [4, 10, 18]
-[1, 2, 3] [4, 5, 6] \\* zip_with
+<span class='kitten comment'>// [4, 10, 18]</span>
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] [<span class='kitten literal'>4</span>, <span class='kitten literal'>5</span>, <span class='kitten literal'>6</span>] \\* zip_with
 """ example
 
 "Lambdas" h2
@@ -475,19 +502,19 @@ partially applied operators.
 """
 Whereas Kitten decouples the concepts of local variable bindings
 (<code>-&gt;</code>…<code>;</code>…) and anonymous functions
-(<code>{</code>…<code>}</code>), in practice we often want to couple these
-things together. For example, in a <code>match</code> expression, we often want
+(<code>{</code>…<code>}</code>) by default, in practice we often want to couple these
+things together. For example, in a <code><span class='kitten keyword'>match</span></code> expression, we often want
 to name the values we extracted, if present. We <em>could</em> use a local
 variable binding inside a block:
 """ p
 
 """
-match (xs head)
-case some:
+<span class='kitten keyword'>match</span> (xs head)
+<span class='kitten keyword'>case</span> some:
   -&gt; x;
   x say
-else:
-  "nothing" say
+<span class='kitten keyword'>else</span>:
+  <span class='kitten literal'>"nothing"</span> say
 """ example
 
 """
@@ -497,18 +524,18 @@ which is compatible with the usual layout syntax for blocks:
 """ p
 
 """
-match (xs head)
-case some -&gt; x {
+<span class='kitten keyword'>match</span> (xs head)
+<span class='kitten keyword'>case</span> some -&gt; x {
   x say
-} else {
-  "nothing" say
+} <span class='kitten keyword'>else</span> {
+  <span class='kitten literal'>"nothing"</span> say
 }
 
-match (xs head)
-case some -&gt; x:
+<span class='kitten keyword'>match</span> (xs head)
+<span class='kitten keyword'>case</span> some -&gt; x:
   x say
-else:
-  "nothing" say
+<span class='kitten keyword'>else</span>:
+  <span class='kitten literal'>"nothing"</span> say
 """ example
 
 """
@@ -518,8 +545,8 @@ definitions.
 """ p
 
 """
-define square
-(Int32 -&gt; Int32)
+<span class='kitten keyword'>define</span> square
+(<span class='kitten type'>Int32</span> -&gt; <span class='kitten type'>Int32</span>)
 -&gt; x:
   x * x
 """ example
@@ -532,8 +559,8 @@ signature, their types are separated by commas.
 """ p
 
 """
-define multiply3
-(Float64, Float64, Float64 -&gt; Float64):
+<span class='kitten keyword'>define</span> multiply3
+(<span class='kitten type'>Float64</span>, <span class='kitten type'>Float64</span>, <span class='kitten type'>Float64</span> -&gt; <span class='kitten type'>Float64</span>):
   -&gt; x, y, z;
   x * y * z
 """ example
@@ -543,8 +570,8 @@ Notice what happens when we write this function in postfix:
 """ p
 
 """
-define multiply3
-(Float64, Float64, Float64 -&gt; Float64):
+<span class='kitten keyword'>define</span> multiply3
+(<span class='kitten type'>Float64</span>, <span class='kitten type'>Float64</span>, <span class='kitten type'>Float64</span> -&gt; <span class='kitten type'>Float64</span>):
   -&gt; x, y, z;
   x y z (*) (*)
 """ example
@@ -558,8 +585,8 @@ arguments and return values implicitly on the stack.
 """ p
 
 """
-define multiply3
-(Float64, Float64, Float64 -&gt; Float64):
+<span class='kitten keyword'>define</span> multiply3
+(<span class='kitten type'>Float64</span>, <span class='kitten type'>Float64</span>, <span class='kitten type'>Float64</span> -&gt; <span class='kitten type'>Float64</span>):
   (*) (*)
 """ example
 
@@ -569,14 +596,14 @@ Unlike most languages, Kitten also allows functions to have multiple
 """ p
 
 """
-define increment_both
-(Int32, Int32 -&gt; Int32, Int32):
+<span class='kitten keyword'>define</span> increment_both
+(<span class='kitten type'>Int32</span>, <span class='kitten type'>Int32</span> -&gt; <span class='kitten type'>Int32</span>, <span class='kitten type'>Int32</span>):
   -&gt; x, y;
-  (x + 1) (y + 1)
+  (x + <span class='kitten literal'>1</span>) (y + <span class='kitten literal'>1</span>)
 
-define increment_both
-(Int32, Int32 -&gt; Int32, Int32):
-  \\(+ 1) to_both
+<span class='kitten keyword'>define</span> increment_both
+(<span class='kitten type'>Int32</span>, <span class='kitten type'>Int32</span> -&gt; <span class='kitten type'>Int32</span>, <span class='kitten type'>Int32</span>):
+  \\(+ <span class='kitten literal'>1</span>) to_both
 """ example
 
 """
@@ -593,14 +620,14 @@ list:
 """ p
 
 """
-define reverse&lt;T&gt;
-(List&lt;T&gt; -&gt; List&lt;T&gt;):
+<span class='kitten keyword'>define</span> reverse&lt;T&gt;
+(<span class='kitten type'>List</span>&lt;<span class='kitten type'>T</span>&gt; -&gt; <span class='kitten type'>List</span>&lt;<span class='kitten type'>T</span>&gt;):
   -&gt; xs;
-  match (xs head_tail)
-  case some:
+  <span class='kitten keyword'>match</span> (xs head_tail)
+  <span class='kitten keyword'>case</span> some:
     unpair -&gt; h, t;
     t reverse h append
-  case none:
+  <span class='kitten keyword'>case</span> none:
     []
 """ example
 
@@ -610,17 +637,17 @@ The signature reads:
 
 """
 // For any type 'T'…
-&lt;T&gt;
+&lt;<span class='kitten type'>T</span>&gt;
 (
 
   // …given a list of values of that type…
-  List&lt;T&gt;
+  <span class='kitten type'>List</span>&lt;<span class='kitten type'>T</span>&gt;
 
   // …this function produces…
   -&gt;
 
   // …another list of values of that type.
-  List&lt;T&gt;
+  <span class='kitten type'>List</span>&lt;<span class='kitten type'>T</span>&gt;
 
 )
 """ example
@@ -628,20 +655,20 @@ The signature reads:
 """
 Functions may be generic in any number of types. For example, the type of the
 <code>map</code> function can be written as
-<code>&lt;A, B&gt; (List&lt;A&gt;, (A -&gt; B) -&gt; List&lt;B&gt;)</code>.
-It takes a list of <code>A</code> values, and a function from <code>A</code> to
-<code>B</code>, and returns a list of <code>B</code> values. <code>A</code> and
-<code>B</code> may refer to the same type or different types.
+<code>&lt;<span class='kitten type'>A</span>, <span class='kitten type'>B</span>&gt; (<span class='kitten type'>List</span>&lt;<span class='kitten type'>A</span>&gt;, (<span class='kitten type'>A</span> -&gt; <span class='kitten type'>B</span>) -&gt; <span class='kitten type'>List</span>&lt;<span class='kitten type'>B</span>&gt;)</code>.
+It takes a list of <code><span class='kitten type'>A</span></code> values, and a function from <code><span class='kitten type'>A</span></code> to
+<code><span class='kitten type'>B</span></code>, and returns a list of <code><span class='kitten type'>B</span></code> values. <code><span class='kitten type'>A</span></code> and
+<code><span class='kitten type'>B</span></code> may refer to the same type or different types.
 """ p
 
 """
-// Same type (Int32 -&gt; Int32)
-// [1, 2, 3, 4]
-[3, 6, 9, 12] { (/ 3) } map
+<span class='kitten comment'>// Same type (Int32 -&gt; Int32)</span>
+<span class='kitten comment'>// [1, 2, 3, 4]</span>
+[<span class='kitten literal'>3</span>, <span class='kitten literal'>6</span>, <span class='kitten literal'>9</span>, <span class='kitten literal'>12</span>] { (/ <span class='kitten literal'>3</span>) } map
 
-// Different types (Int32 -&gt; List&lt;Char&gt;)
-// ["3", "6", "9", "12"]
-[3, 6, 9, 12] \\show map
+<span class='kitten comment'>// Different types (Int32 -&gt; List&lt;Char&gt;)</span>
+<span class='kitten comment'>// ["3", "6", "9", "12"]</span>
+[<span class='kitten literal'>3</span>, <span class='kitten literal'>6</span>, <span class='kitten literal'>9</span>, <span class='kitten literal'>12</span>] \\show map
 """ example
 
 "Permissions" h2
@@ -651,16 +678,16 @@ We’ve seen functions such as <code>say</code> that have <em>side
 effects</em>. Kitten’s type system includes a concept of <em>permissions</em>,
 which track the side effects that a function is allowed to perform.
 <code>say</code>, <code>print</code>, <code>newline</code>, and other such
-output functions require the <code>+IO</code> permission because they perform
+output functions require the <code>+<span class='kitten type'>IO</span></code> permission because they perform
 I/O, and this is reflected in their types.
 """ p
 
 """
-// Takes no inputs,
-// produces no outputs,
-// and has permission to do I/O.
-define newline (-> +IO):
-  "\\n" print
+<span class='kitten comment'>// Takes no inputs,</span>
+<span class='kitten comment'>// produces no outputs,</span>
+<span class='kitten comment'>// and has permission to do I/O.</span>
+<span class='kitten keyword'>define</span> newline (-> +<span class='kitten type'>IO</span>):
+  <span class='kitten literal'>"\\n"</span> print
 """ example
 
 """
@@ -669,15 +696,15 @@ Some of the standard permissions in Kitten are:
 
 do (definition_list):
 
-  "<code>+IO</code>"
+  "<code>+<span class='kitten type'>IO</span></code>"
   "Permission to do I/O, or more generally, break referential transparency."
   definition_item
 
-  "<code>+Fail</code>"
+  "<code>+<span class='kitten type'>Fail</span></code>"
   "Permission to abort the program with an assertion failure."
   definition_item
 
-  "<code>+Unsafe</code>"
+  "<code>+<span class='kitten type'>Unsafe</span></code>"
   "Permission to break memory safety."
   definition_item
 
