@@ -384,13 +384,13 @@ are swapped.
 // TODO: link functions (e.g. "head") to their docs.
 
 """
-<span class='kitten keyword'>match</span> (xs head):
-  <span class='kitten keyword'>case</span> some:
-    -&gt; x;
-    <span class='kitten literal'>"Non-empty list; first value: "</span> print
-    x say
-  <span class='kitten keyword'>case</span> none:
-    <span class='kitten literal'>"Empty list."</span> say
+<span class='kitten keyword'>match</span> (xs head)
+<span class='kitten keyword'>case</span> some:
+  -&gt; x;
+  <span class='kitten literal'>"Non-empty list; first value: "</span> print
+  x say
+<span class='kitten keyword'>case</span> none:
+  <span class='kitten literal'>"Empty list."</span> say
 """ example
 
 """
