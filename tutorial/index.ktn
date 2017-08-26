@@ -124,7 +124,9 @@ meow
 27
 """ example
 
-"The <code>drop</code> function lets us drop a single value from the stack. In interactive mode, you can also use the <code><kbd>:clear</kbd></code> command to clear the stack entirely." p
+// TODO: In interactive mode, you can also use the <code><kbd>//clear</kbd></code> command to clear the stack entirely.
+
+"The <code>drop</code> function lets us drop a single value from the stack." p
 
 "Vectors and Functions" h2
 
