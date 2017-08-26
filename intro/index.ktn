@@ -620,7 +620,7 @@ list:
 """ p
 
 """
-<span class='kitten keyword'>define</span> reverse&lt;T&gt;
+<span class='kitten keyword'>define</span> reverse&lt;<span class='kitten type'>T</span>&gt;
 (<span class='kitten type'>List</span>&lt;<span class='kitten type'>T</span>&gt; -&gt; <span class='kitten type'>List</span>&lt;<span class='kitten type'>T</span>&gt;):
   -&gt; xs;
   <span class='kitten keyword'>match</span> (xs head_tail)
