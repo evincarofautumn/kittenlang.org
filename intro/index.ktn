@@ -697,15 +697,15 @@ Some of the standard permissions in Kitten are:
 do (definition_list):
 
   "<code>+<span class='kitten type'>IO</span></code>"
-  "Permission to do I/O, or more generally, break referential transparency."
+  "Permission to do I/O, or more generally, break referential transparency. A function requiring <code>+<span class='kitten type'>IO</span></code> is allowed to produce side effects and return different values each time it’s called on the same inputs, e.g., <code><span class='kitten literal'>\"Enter a number: \"</span> ask <span class='kitten literal'>\"Enter a number: \"</span> ask</code> returns whatever the user entered each time, despite being called with the same argument."
   definition_item
 
   "<code>+<span class='kitten type'>Fail</span></code>"
-  "Permission to abort the program with an assertion failure."
+  "Permission to abort the program with an assertion failure. This is required by the <code>fail</code> and <code>abort</code> words. It also appears in the implicit <code><span class='kitten keyword'>else</span></code> branch of <code><span class='kitten keyword'>match</span></code> expressions that don’t include a <code><span class='kitten keyword'>case</span></code> for all constructors and don’t have an explicit <code><span class='kitten keyword'>else</span></code>."
   definition_item
 
   "<code>+<span class='kitten type'>Unsafe</span></code>"
-  "Permission to break memory safety."
+  "Permission to break memory safety. This can be used for low-level programming in Kitten, such as accessing the memory representations of Kitten values or working with raw pointers."
   definition_item
 
 }
