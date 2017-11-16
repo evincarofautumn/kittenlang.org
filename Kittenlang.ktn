@@ -150,7 +150,7 @@ define anchor_item (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
     contents [("href" => href)] anchor
 
 define top_navigation (-> +IO):
-  do ("header" block):
+  do ([("role" => "banner")] "header" attr_block):
     do ("body-width" class_div):
       "Kitten"
       do (anchor) [
