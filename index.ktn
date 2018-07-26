@@ -47,8 +47,8 @@ greet
 "Larger examples" h3
 
 do ([] anchor_list) [
-  ("99 Bottles of Beer" => "https://github.com/evincarofautumn/kitten/blob/5b01e2b52246cbcf927c9e98581afbae6672b8a3/examples/beer.ktn"),
-  ("Tic Tac Toe"        => "https://github.com/evincarofautumn/kitten/blob/5b01e2b52246cbcf927c9e98581afbae6672b8a3/examples/tictactoe.ktn"),
+  ("99 Bottles of Beer" => "https://github.com/evincarofautumn/kitten/blob/129d4bc7e5658a03cc765358ba0a1aba2dbf1c73/examples/beer.ktn"),
+  ("Tic Tac Toe"        => "https://github.com/evincarofautumn/kitten/blob/129d4bc7e5658a03cc765358ba0a1aba2dbf1c73/examples/tictactoe.ktn"),
 ]
 
 "The <a href='https://github.com/evincarofautumn/kitten'>source code</a> is hosted on GitHub, and you can join <a href='irc://freenode.net/#concatenative'>#concatenative on Freenode</a> to keep up with the latest developments." p
