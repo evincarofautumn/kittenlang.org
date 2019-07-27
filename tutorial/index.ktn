@@ -1,12 +1,12 @@
 do (page_template) {
 
-"Tutorial" h1
+"Tutorial" "tutorial" h1
 
 "Welcome to the Kitten tutorial! This is the best way to start learning Kitten, a little functional stack-based programming language. Actually, it’s pretty much the only way, because Kitten is young. But it has a lot of big ideas!" p
 
 "This tutorial tries not to make too many assumptions about your existing knowledge, and it has lots of links to outside learning materials so you don’t ever get lost. However, you will definitely find learning Kitten easier if you’ve programmed before." p
 
-"What is Kitten?" h2
+"What is Kitten?" "what-is-kitten" h2
 
 "<strong>Kitten</strong> is a statically typed stack-based functional programming language designed to be simple and fast. (That’s what the website says.) A <em>functional</em> language is one that speaks <em>declaratively</em> about the solution to a problem, with an emphasis on, you guessed it, functions. Three important properties of functional languages are:" p
 
@@ -52,13 +52,13 @@ do (definition_list):
 2 3 (+) 42 12 (-) (*)
 """ example
 
-"Hold up!" h2
+"Hold up!" "hold-up" h2
 
 "I mentioned earlier that Kitten is <em>both</em> functional <em>and</em> stack-based. These two seemingly opposing features are reconciled by a simple notion: <em>effects</em>. The only side effect of the <code>+</code> operator is to pop two values from the stack and push their sum, and it always produces the same output given the same inputs—it is a pure function from one stack state to another." p
 
 "So in fact, we can <em>reason</em> about these imperative stack procedures as pure mathematical functions, just like in a functional programming language, but since there’s only ever one stack “live” at a given time, we can update it in-place for efficiency. This combination of imperative style and functional reasoning is called <a href='https://en.wikipedia.org/wiki/Concatenative_programming'>concatenative programming</a>, and it’s a powerful way of thinking about programs." p
 
-"Enough jibber jabber! Let’s write some code!" h2
+"Enough jibber jabber! Let’s write some code!" "enough-jibber-jabber-lets-write-some-code" h2
 
 "Okay! First you need to download and install Kitten for your platform." p
 
@@ -128,7 +128,7 @@ meow
 
 "The <code>drop</code> function lets us drop a single value from the stack." p
 
-"Vectors and Functions" h2
+"Vectors and Functions" "vectors-and-functions" h2
 
 "Kitten has a built-in list datatype. List literals are surrounded by square brackets <code>[]</code> and have comma-separated elements." p
 

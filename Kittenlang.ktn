@@ -138,8 +138,8 @@ define definition_item (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
   term "dt" text_block
   definition "dd" text_block
 
-define anchor (List<Char> /* Text */, List<Pair<List<Char>, List<Char>>> /* Attrs */ -> +IO):
-  "a" attr_text_block
+define anchor ((-> +IO), List<Pair<List<Char>, List<Char>>> /* Attrs */ -> +IO):
+  "a" attr_block
 
 define item ((-> +IO) -> +IO):
   "li" block
@@ -147,12 +147,12 @@ define item ((-> +IO) -> +IO):
 define anchor_item (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
   -> contents, href;
   do (item):
-    contents [("href" => href)] anchor
+    { contents print } [("href" => href)] anchor
 
 define top_navigation (-> +IO):
   do ([("role" => "banner")] "header" attr_block):
     do ("body-width" class_div):
-      "Kitten"
+      { "Kitten" print }
       do (anchor) [
         ("class" => "title left"),
         ("href"  => "/"),
@@ -170,14 +170,17 @@ define class_div ((-> +IO), List<Char> /* Text */ -> +IO):
 define nav_title (List<Char> /* Text */ -> +IO):
   [("class" => "title")] "h1" attr_text_block
 
-define h1 (List<Char> /* Text */ -> +IO):
-  "h1" text_block
+define h1 (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> text, name;
+  { text "h1" text_block } [("name" => "#" name cat)] anchor
 
-define h2 (List<Char> /* Text */ -> +IO):
-  "h2" text_block
+define h2 (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> text, name;
+  { text "h2" text_block } [("name" => name)] anchor
 
-define h3 (List<Char> /* Text */ -> +IO):
-  "h3" text_block
+define h3 (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> text, name;
+  { text "h3" text_block } [("name" => name)] anchor
 
 define anchor_list (List<Pair<List<Char>, List<Char>>> /* Attrs */, List<Pair<List<Char>, List<Char>>> /* Attrs */ -> +IO):
   -> links, attrs;

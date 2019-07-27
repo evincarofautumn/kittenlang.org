@@ -1,32 +1,32 @@
 do (page_template) {
 
-"FAQ" h1
+"FAQ" "faq" h1
 
 "Here are some questions that people often ask me about Kitten." p
 
-"Why a new language?" h2
+"Why a new language?" "why-a-new-language" h2
 
 "Primarily, I wanted to see how far I could take this idea. I have always loved programming languages and developer tools, because they let me multiply others’ productivity. And there are many reasons to create a language—for research, for fun, to learn how languages work. Most languages will not attain general popularity, though their ideas may be incorporated into other mainstream languages." p
 
 "As for why this idea specifically—I want a simple language that makes low-level programming feel high-level, with a predictable performance model and good interoperation with C, that uses static types to make my programs faster and more correct. In my estimation, the concatenative paradigm is the best foundation on which to build that language. And these ideas won’t work in other languages, because you can’t get the benefits of concatenative programming in a language that was not designed for it." p
 
-"Why is it called Kitten?" h2
+"Why is it called Kitten?" "why-is-it-called-kitten" h2
 
 "It’s a small con<u>cat</u>enative language. It’s also intended to be a practical successor to <a href='http://cat-language.org/'>Cat</a>, which was the first statically typed concatenative language." p
 
-"Is it compiled or interpreted?" h2
+"Is it compiled or interpreted?" "is-it-compiled-or-interpreted" h2
 
 "There is an interpreter written in Haskell, and a work-in-progress native code compiler. This enables you to try code interactively in the interpreter, then compile it to run efficiently." p
 
-"Is it stable?" h2
+"Is it stable?" "is-it-stable" h2
 
 "No. Kitten is under active development, and the syntax and standard libraries undergo periodic changes as the language matures. It is possible to build some practical software with the language, but there will continue to be breaking changes for a while." p
 
-"Why functional?" h2
+"Why functional?" "why-functional" h2
 
 "I started playing around with <a href='http://haskell.org/'>Haskell</a> in college for personal projects, and immediately fell in love with the ability to quickly write and refactor robust software using expressive, reusable, type-safe abstractions. Haskell is fast, but few programmers know how to write high-performance code in it. So I wanted to take that expressive power and bring it to the world of low-level programming, using a performance model that many programmers already know." p
 
-"Why stack-based?" h2
+"Why stack-based?" "why-stack-based" h2
 
 "While doing programming language research in college, I stumbled across the <a href='http://concatenative.org/'>concatenative programming</a> paradigm. Functional programming had already given me an appreciation for the power of composition, and I realized how much <em>more</em> refactoring power you get from a language where composition is the default way to build programs. Stack-based programming is simply a natural way to enable that." p
 

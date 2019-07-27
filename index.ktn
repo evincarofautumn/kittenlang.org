@@ -1,10 +1,10 @@
 do (page_template) {
 
-"The Kitten Programming Language" h1
+"The Kitten Programming Language" "the-kitten-programming-language" h1
 
 "<strong>Kitten</strong> is a statically typed, stack-based functional programming language designed to be simple and fast. It is a <em>concatenative</em> language, combining aspects of imperative and pure functional programming. There is <a href='/intro/'>an introduction</a> available and a <a href='/tutorial/'>tutorial</a> in progress." p
 
-"Features" h2
+"Features" "features" h2
 
 do (definition_list):
   "Concatenative Programming"
@@ -23,9 +23,9 @@ do (definition_list):
   "Automatic management of memory and resources with no garbage collector."
   definition_item
 
-"Examples" h2
+"Examples" "examples" h2
 
-"Hello world" h3
+"Hello world" "hello-world" h3
 
 // TODO: Do syntax highlighting automatically.
 
@@ -33,7 +33,7 @@ do (definition_list):
 <span class='kitten literal'>"meow"</span> say  <span class='kitten comment'>// Kittens don't speak English.</span>
 """ example
 
-"Hello user" h3
+"Hello user" "hello-user" h3
 
 """
 <span class='kitten keyword'>define</span> greet (<span class='kitten type'>List</span>&lt;<span class='kitten type'>Char</span>&gt; -&gt; +<span class='kitten type'>IO</span>):
@@ -44,7 +44,7 @@ do (definition_list):
 greet
 """ example
 
-"Larger examples" h3
+"Larger examples" "larger-examples" h3
 
 do ([] anchor_list) [
   ("99 Bottles of Beer" => "https://github.com/evincarofautumn/kitten/blob/129d4bc7e5658a03cc765358ba0a1aba2dbf1c73/examples/beer.ktn"),

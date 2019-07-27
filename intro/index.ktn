@@ -1,6 +1,6 @@
 do (page_template) {
 
-"Introduction" h1
+"Introduction" "introduction" h1
 
 """
 This is a quick introduction to Kitten. It glosses over some nuances of the
@@ -9,7 +9,7 @@ started with using Kitten. I’m working on a more complete treatment of how to
 use Kitten in the form of a <a href='/tutorial/'>tutorial</a>.
 """ p
 
-"Comments" h2
+"Comments" "comments" h2
 
 "Comments are C-style. Multi-line comments are allowed to nest." p
 
@@ -30,7 +30,7 @@ use Kitten in the form of a <a href='/tutorial/'>tutorial</a>.
 */</span>
 """ example
 
-"Literals" h2
+"Literals" "literals" h2
 
 """
 Integers consist of decimal digits, or a base prefix and digits in the
@@ -108,7 +108,7 @@ It contains multiple lines.
 <span class='kitten literal'>"1 2 3 4 5\\n6 7 8 9 10\\n\\n11 12"</span>
 """ example
 
-"Lists" h2
+"Lists" "lists" h2
 
 """
 Lists are surrounded by square brackets (<code>[]</code>) with comma-separated
@@ -139,7 +139,7 @@ Note that the type of <code>[]</code> is
 an empty list may be used where a list of any type is expected.
 """ p
 
-"Expressions and Stack-based Evaluation" h2
+"Expressions and Stack-based Evaluation" "expressions-and-stack-based-evaluation" h2
 
 """
 Kitten is an <em>expression language</em>; there are no statements, only
@@ -226,7 +226,7 @@ level, postfix syntax can be thought of as representing a data flow graph.
 </table>
 """ print
 
-"Locals" h2
+"Locals" "locals" h2
 
 """
 Local variables can be introduced with the <code>-&gt; name;</code> syntax
@@ -259,7 +259,7 @@ Local variables are always immutable. Pushing a local to the stack once simply
 multiple times <em>copies</em> its value, as long as the type is copyable.
 """ p
 
-"Conditionals and Blocks" h2
+"Conditionals and Blocks" "conditionals-and-blocks" h2
 
 """
 Conditional execution uses the
@@ -323,7 +323,7 @@ function.
 <span class='kitten keyword'>if</span> (have_food) { purr } <span class='kitten keyword'>else</span> {}
 """ example
 
-"Algebraic Data Types" h2
+"Algebraic Data Types" "algebraic-data-types" h2
 
 """
 Kitten has <em>algebraic data types</em> (ADTs) defined with the
@@ -432,7 +432,7 @@ the <code>+<span class='kitten type'>Fail</span></code> permission, which will
 be explained later on.
 """ p
 
-"Function Definitions" h2
+"Function Definitions" "function-definitions" h2
 
 """
 You can define new functions with the
@@ -497,7 +497,7 @@ partially applied operators.
 [<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] [<span class='kitten literal'>4</span>, <span class='kitten literal'>5</span>, <span class='kitten literal'>6</span>] \\* zip_with
 """ example
 
-"Lambdas" h2
+"Lambdas" "lambdas" h2
 
 """
 Whereas Kitten decouples the concepts of local variable bindings
@@ -551,7 +551,7 @@ definitions.
   x * x
 """ example
 
-"Multiple Inputs and Outputs" h2
+"Multiple Inputs and Outputs" "multiple-inputs-and-outputs" h2
 
 """
 As in most languages, functions can take multiple inputs. In the type
@@ -611,7 +611,7 @@ Unlike most languages, Kitten also allows functions to have multiple
 values, and applies the function to both of the values.
 """ p
 
-"Polymorphism" h2
+"Polymorphism" "polymorphism" h2
 
 """
 Type signatures often include <em>type variables</em>, which enable
@@ -671,7 +671,7 @@ It takes a list of <code><span class='kitten type'>A</span></code> values, and a
 [<span class='kitten literal'>3</span>, <span class='kitten literal'>6</span>, <span class='kitten literal'>9</span>, <span class='kitten literal'>12</span>] \\show map
 """ example
 
-"Permissions" h2
+"Permissions" "permissions" h2
 
 """
 We’ve seen functions such as <code>say</code> that have <em>side
