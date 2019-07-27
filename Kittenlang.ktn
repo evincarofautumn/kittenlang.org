@@ -170,17 +170,19 @@ define class_div ((-> +IO), List<Char> /* Text */ -> +IO):
 define nav_title (List<Char> /* Text */ -> +IO):
   [("class" => "title")] "h1" attr_text_block
 
+define hn (List<Char> /* Text */, List<Char> /* Text */, List<Char> /* Text */ -> +IO):
+  -> text, name, tag;
+  "#" name cat -> hash;
+  { { text print } ["name" => hash, "href" => hash] anchor } tag block
+
 define h1 (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
-  -> text, name;
-  { text "h1" text_block } [("name" => "#" name cat)] anchor
+  "h1" hn
 
 define h2 (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
-  -> text, name;
-  { text "h2" text_block } [("name" => name)] anchor
+  "h2" hn
 
 define h3 (List<Char> /* Text */, List<Char> /* Text */ -> +IO):
-  -> text, name;
-  { text "h3" text_block } [("name" => name)] anchor
+  "h3" hn
 
 define anchor_list (List<Pair<List<Char>, List<Char>>> /* Attrs */, List<Pair<List<Char>, List<Char>>> /* Attrs */ -> +IO):
   -> links, attrs;
