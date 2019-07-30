@@ -67,7 +67,7 @@ Text literals use double-quotes
 (<code><span class='kitten literal'>""</span></code>), and are syntactic sugar
 for lists of characters. They have type
 <code><span class='kitten type'>List</span>&lt;<span class='kitten type'>Char</span>&gt;</code>.
-Common character escapes are allowed using a backslash <code>\\</code>. Character
+Common character escapes are allowed using a backslash <code>&#x5C;</code>. Character
 literals use single quotes (<code><span class='kitten literal'>''</span></code>).
 """ p
 
@@ -75,8 +75,8 @@ literals use single quotes (<code><span class='kitten literal'>''</span></code>)
 <span class='kitten comment'>// []</span>
 <span class='kitten literal'>""</span>
 
-<span class='kitten comment'>// ['M', 'e', 'o', 'w', '!', '\\n']</span>
-<span class='kitten literal'>"Meow!\\n"</span>
+<span class='kitten comment'>// ['M', 'e', 'o', 'w', '!', '&#x5C;n']</span>
+<span class='kitten literal'>"Meow!&#x5C;n"</span>
 """ example
 
 """
@@ -88,24 +88,24 @@ line.
 
 """
 
-<span class='kitten literal'>\"\"\"
+<span class='kitten literal'>&#x22;&#x22;&#x22;
 Here’s a paragraph.
 It contains multiple lines.
 (Haiku optional.)
-\"\"\"</span>
+&#x22;&#x22;&#x22;</span>
 
-  <span class='kitten literal'>\"\"\"
+  <span class='kitten literal'>&#x22;&#x22;&#x22;
   1 2 3 4 5
   6 7 8 9 10
 
   11 12
-  \"\"\"</span>
+  &#x22;&#x22;&#x22;</span>
 
 <span class='kitten comment'>// Equivalent to:</span>
 
-<span class='kitten literal'>"Here’s a paragraph.\\nIt contains multiple lines.\\n(Haiku optional.)"</span>
+<span class='kitten literal'>"Here’s a paragraph.&#x5C;nIt contains multiple lines.&#x5C;n(Haiku optional.)"</span>
 
-<span class='kitten literal'>"1 2 3 4 5\\n6 7 8 9 10\\n\\n11 12"</span>
+<span class='kitten literal'>"1 2 3 4 5&#x5C;n6 7 8 9 10&#x5C;n&#x5C;n11 12"</span>
 """ example
 
 "Lists" "lists" h2
@@ -163,7 +163,7 @@ chaining multiple functions together in a “pipeline”.
 """ p
 
 """
-<span class='kitten literal'>"Meow!\\n"</span> print
+<span class='kitten literal'>"Meow!&#x5C;n"</span> print
 
 <span class='kitten comment'>// Prints "3-" followed by a newline.</span>
 <span class='kitten literal'>-3</span> abs neg show reverse say
@@ -479,22 +479,22 @@ arguments, such as <code>map</code>, <code>filter</code>,
 """ example
 
 """
-The backslash syntax <code>\\f</code> is a slightly more succinct equivalent,
+The backslash syntax <code>&#x5C;f</code> is a slightly more succinct equivalent,
 with the advantage that an operator can be referred to as simply
-<code>\\+</code> instead of <code>{ (+) }</code>. Mnemonically, this is
+<code>&#x5C;+</code> instead of <code>{ (+) }</code>. Mnemonically, this is
 “escaping” the function to prevent it from being evaluated. This also works with
 partially applied operators.
 """ p
 
 """
 <span class='kitten comment'>// [1, 4, 9]</span>
-[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] \\square map
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] &#x5C;square map
 
 <span class='kitten comment'>// [2, 3, 4]</span>
-[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] \\(+ <span class='kitten literal'>1</span>) map
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] &#x5C;(+ <span class='kitten literal'>1</span>) map
 
 <span class='kitten comment'>// [4, 10, 18]</span>
-[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] [<span class='kitten literal'>4</span>, <span class='kitten literal'>5</span>, <span class='kitten literal'>6</span>] \\* zip_with
+[<span class='kitten literal'>1</span>, <span class='kitten literal'>2</span>, <span class='kitten literal'>3</span>] [<span class='kitten literal'>4</span>, <span class='kitten literal'>5</span>, <span class='kitten literal'>6</span>] &#x5C;* zip_with
 """ example
 
 "Lambdas" "lambdas" h2
@@ -603,7 +603,7 @@ Unlike most languages, Kitten also allows functions to have multiple
 
 <span class='kitten keyword'>define</span> increment_both
 (<span class='kitten type'>Int32</span>, <span class='kitten type'>Int32</span> -&gt; <span class='kitten type'>Int32</span>, <span class='kitten type'>Int32</span>):
-  \\(+ <span class='kitten literal'>1</span>) to_both
+  &#x5C;(+ <span class='kitten literal'>1</span>) to_both
 """ example
 
 """
@@ -668,7 +668,7 @@ It takes a list of <code><span class='kitten type'>A</span></code> values, and a
 
 <span class='kitten comment'>// Different types (Int32 -&gt; List&lt;Char&gt;)</span>
 <span class='kitten comment'>// ["3", "6", "9", "12"]</span>
-[<span class='kitten literal'>3</span>, <span class='kitten literal'>6</span>, <span class='kitten literal'>9</span>, <span class='kitten literal'>12</span>] \\show map
+[<span class='kitten literal'>3</span>, <span class='kitten literal'>6</span>, <span class='kitten literal'>9</span>, <span class='kitten literal'>12</span>] &#x5C;show map
 """ example
 
 "Permissions" "permissions" h2
@@ -687,7 +687,7 @@ I/O, and this is reflected in their types.
 <span class='kitten comment'>// produces no outputs,</span>
 <span class='kitten comment'>// and has permission to do I/O.</span>
 <span class='kitten keyword'>define</span> newline (-> +<span class='kitten type'>IO</span>):
-  <span class='kitten literal'>"\\n"</span> print
+  <span class='kitten literal'>"&#x5C;n"</span> print
 """ example
 
 """
