@@ -306,7 +306,7 @@ pre .nocode {
 
 pre code {
 	word-wrap: break-word;
-	white-space: wrap;
+	white-space: pre-wrap;
 }
 
 .kitten.keyword { color: #008; font-weight: bold }
